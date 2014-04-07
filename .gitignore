@@ -19,3 +19,23 @@
 *.exe
 *.out
 *.app
+
+## autotools
+*/.deps/
+*/.libs/
+*Makefile
+*Makefile.in
+COPYING
+INSTALL
+aclocal.m4
+autom4te.cache/
+compile
+config.*
+configure
+depcomp
+install-sh
+libtool
+ltmain.sh
+missing
+stamp-h1
+test/main

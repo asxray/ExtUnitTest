@@ -3,10 +3,10 @@
 
 AC_PREREQ([2.69])
 AC_INIT([ExtUnitTest], [0.1])
-# init automake
-AM_INIT_AUTOMAKE([-Wall])
-AC_CONFIG_SRCDIR([include/Test.h])
+AC_CONFIG_SRCDIR([src/Test.cpp])
 AC_CONFIG_HEADERS([config.h])
+# automake
+AM_INIT_AUTOMAKE([-Wall])
 # libtool
 AC_PROG_LIBTOOL
 
@@ -20,6 +20,10 @@ AC_PROG_CC
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([
+Makefile
+src/Makefile
+test/Makefile
+])
 
 AC_OUTPUT
