@@ -1,3 +1,3 @@
-noinst_PROGRAMS = main
-main_SOURCES = main.cpp
-main_LDADD = ../src/libextunittest.la
+noinst_PROGRAMS = main.out
+main_out_SOURCES = main.cpp
+main_out_LDADD = ../src/libextunittest.la
