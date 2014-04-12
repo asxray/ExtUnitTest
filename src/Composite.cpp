@@ -1,20 +1,20 @@
 /*
- * TestCase.cpp
+ * Composite.cpp
  *
- *  Created on: Apr 13, 2014
+ *  Created on: Apr 14, 2014
  *      Author: josephx
  */
 
-#include "TestCase.h"
+#include "Composite.hpp"
 
 namespace eutest
 {
-TestCase::TestCase()
+Composite::Composite()
 {
     // TODO Auto-generated constructor stub
 }
 
-TestCase::~TestCase()
+Composite::~Composite()
 {
     // TODO Auto-generated destructor stub
 }

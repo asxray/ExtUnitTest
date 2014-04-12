@@ -1,20 +1,20 @@
 /*
- * TestCase.cpp
+ * TestCaseFactory.cpp
  *
  *  Created on: Apr 13, 2014
  *      Author: josephx
  */
 
-#include "TestCase.h"
+#include "TestCaseFactory.h"
 
 namespace eutest
 {
-TestCase::TestCase()
+TestCaseFactory::TestCaseFactory()
 {
     // TODO Auto-generated constructor stub
 }
 
-TestCase::~TestCase()
+TestCaseFactory::~TestCaseFactory()
 {
     // TODO Auto-generated destructor stub
 }

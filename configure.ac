@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.68])
 AC_INIT([ExtUnitTest], [0.1])
-AC_CONFIG_SRCDIR([src/Test.cpp])
+AC_CONFIG_SRCDIR([src/TestBase.cpp])
 AC_CONFIG_HEADERS([config.h])
 # automake
 AM_INIT_AUTOMAKE([-Wall])

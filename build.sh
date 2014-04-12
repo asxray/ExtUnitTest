@@ -1,5 +1,5 @@
 #!/bin/bash -x
 autoconf
 autoreconf -is && \
-./configure && \
+./configure CXXFLAGS='-O0 -ggdb' && \
 make

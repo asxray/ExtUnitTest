@@ -1,20 +1,20 @@
 /*
- * TestCase.cpp
+ * TestVisitor.cpp
  *
  *  Created on: Apr 13, 2014
  *      Author: josephx
  */
 
-#include "TestCase.h"
+#include "TestVisitor.h"
 
 namespace eutest
 {
-TestCase::TestCase()
+TestVisitor::TestVisitor()
 {
     // TODO Auto-generated constructor stub
 }
 
-TestCase::~TestCase()
+TestVisitor::~TestVisitor()
 {
     // TODO Auto-generated destructor stub
 }
