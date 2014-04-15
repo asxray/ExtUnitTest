@@ -2,4 +2,4 @@
 autoconf
 autoreconf -is && \
 ./configure CXXFLAGS='-O0 -ggdb' && \
-make
+make -j

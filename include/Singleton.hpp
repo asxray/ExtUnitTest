@@ -2,38 +2,35 @@
 #define SINGLETON_HPP
 
 #include <boost/shared_ptr.hpp>
-#include <boost/thread/locks.hpp>
-#include <boost/thread/mutex.hpp>
 
 template<typename T>
 class singleton
 {
 public:
-    static boost::shared_ptr<T>
+    typedef T BaseType;
+    static T&
     Instance()
     {
-        static boost::mutex mux;
         if (0 == mInstance.get())
         {
-            boost::lock_guard<boost::mutex> guard(mux);
+#pragma omp critical
             if (0 == mInstance.get())
                 mInstance.reset(new T);
         }
-        return(mInstance);
+        return(*mInstance);
     }
-protected:
-    singleton() {}
-    virtual
-    ~singleton() {}
 private:
-    singleton(const singleton&);
-    const singleton&
-                                operator = (const singleton&);
     static boost::shared_ptr<T> mInstance;
 };
 
 template<typename T>
 boost::shared_ptr<T>
 singleton<T>::mInstance;
+
+#define SINGLETON() \
+    friend BaseType& singleton<BaseType>::Instance(); \
+    friend void boost::checked_delete<>(BaseType*); \
+    const BaseType& \
+    operator = (BaseType&);
 
 #endif

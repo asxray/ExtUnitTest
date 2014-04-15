@@ -52,8 +52,7 @@ class Composite
 {
 public:
     Composite()
-    {
-    }
+    {}
     virtual
     ~Composite() {}
     void

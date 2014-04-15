@@ -3,16 +3,12 @@
 class testSingleton
     : public singleton<testSingleton>
 {
-protected:
-    friend class singleton<testSingleton>;
-    friend void boost::checked_delete<
-        >(testSingleton*);
+private:
+    SINGLETON();
     testSingleton() {}
+    testSingleton(testSingleton&) {}
     virtual
     ~testSingleton() {}
-    testSingleton(testSingleton&) {}
-    const testSingleton&
-    operator = (testSingleton&);
 public:
     void
     say()
@@ -24,5 +20,7 @@ public:
 int
 main()
 {
-    testSingleton::Instance()->say();
+    //	testSingleton ats; // can't compile
+    //	ats.say();
+    testSingleton::Instance().say();
 }
