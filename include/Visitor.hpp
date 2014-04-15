@@ -112,11 +112,11 @@ protected:
     }
 };
 
-#define EUTEST_VISITABLE() \
+#define VISITABLE() \
     virtual ReturnType Accept(eutest::BaseVisitor & guest) \
     {return AcceptImpl(*this, guest); };
 
-#define EUTEST_CONST_VISITABLE() \
+#define CONST_VISITABLE() \
     virtual ReturnType Accept(eutest::BaseVisitor & guest) const \
     {return AcceptImpl(*this, guest); }
 } /* namespace eutest */

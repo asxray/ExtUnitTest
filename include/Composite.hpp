@@ -15,8 +15,10 @@
 namespace eutest
 {
 class Component
+    : virtual public BaseVisitable<>
 {
 public:
+    VISITABLE();
     Component() {}
     virtual
     ~Component() {}
@@ -36,7 +38,7 @@ public:
         return(parent);
     }
     void
-    setParent(Component*& parent)
+    setParent(Component* parent)
     {
         this->parent = parent;
     }
@@ -44,20 +46,46 @@ protected:
     std::string name;
     Component*  parent;
 };
-
+template<class T>
+class Leaf
+    : virtual public Component,
+      virtual public BaseVisitable<>
+{
+public:
+    Leaf() {}
+    virtual
+    ~Leaf() {}
+    virtual void
+    Accept(eutest::BaseVisitor& guest)
+    {
+        AcceptImpl(*dynamic_cast<T*>(this), guest);
+    }
+};
 template<class T>
 class Composite
     : virtual public Component,
-      virtual public T
+      virtual public BaseVisitable<>
 {
+protected:
+    typedef boost::ptr_list<Component> Container;
 public:
     Composite()
     {}
     virtual
     ~Composite() {}
-    void
-    Add(T*& aChild)
+    virtual void
+    Accept(eutest::BaseVisitor& guest)
     {
+        AcceptImpl(*dynamic_cast<T*>(this), guest);
+        for (Container::iterator i = children.begin();
+             children.end() != i;
+             ++i)
+            i->Accept(guest);
+    }
+    void
+    Add(Component* aChild)
+    {
+        aChild->setParent(dynamic_cast<T*>(this));
 #pragma omp critical
         children.push_back(aChild);
     }
@@ -67,9 +95,8 @@ public:
 #pragma omp critical
         children.clear();
     }
+
 protected:
-    typedef boost::ptr_list<Component> Container;
-    typedef Container::iterator        ChildIter;
     Container children;
 };
 } /* namespace eutest */

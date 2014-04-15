@@ -10,32 +10,32 @@
 #include <boost/lambda/lambda.hpp>
 #include <iostream>
 class brick
-    : public virtual eutest::Component,
-      public eutest::BaseVisitable<>
+    : virtual public eutest::Leaf<brick>
 {
 public:
-    EUTEST_VISITABLE();
     brick() {}
     virtual
     ~brick() {}
+    void
+    Say()
+    {
+    	if (Component* p = getParent())
+    	std::cout << "I'm in " << p->getName() << std::endl;
+    }
 };
 
 class wall
-    : virtual public eutest::Composite<brick>
+    : virtual public eutest::Composite<wall>
 {
 public:
     wall() {}
     virtual
     ~wall() {}
-    virtual void
-    Accept(eutest::BaseVisitor& guest)
+    void
+    Say()
     {
-        AcceptImpl(*this, guest);
-        for (ChildIter i = children.begin();
-             children.end() != i;
-             ++i)
-            if (brick * p = dynamic_cast<brick*>(&*i))
-                p->Accept(guest);
+    	if (Component* p = getParent())
+    	std::cout << "I'm in " << p->getName() << std::endl;
     }
 };
 
@@ -52,13 +52,15 @@ public:
     void
     Visit(brick& aPlace)
     {
-        std::cout << " clambing on brick " << aPlace.getName() << std::endl;
+        std::cout << " clambing on brick: " << aPlace.getName() << std::endl;
+        aPlace.Say();
     }
     virtual
     void
     Visit(wall& aPlace)
     {
-        std::cout << " clambing on wall " << aPlace.getName() << std::endl;
+        std::cout << " clambing on wall: " << aPlace.getName() << std::endl;
+        aPlace.Say();
     }
 };
 
@@ -66,14 +68,19 @@ int
 main()
 {
     Insect ant;
-    wall   southwall;
-    southwall.setName("south wall");
+    wall*  northwall  = new wall;
+    wall*  southwall  = new wall;
     brick* redbrick   = new brick;
-    redbrick->setName("red brick");
     brick* blackbrick = new brick;
+    southwall->setName("south wall");
+    northwall->setName("North Wall");
+    redbrick->setName("red brick");
     blackbrick->setName("black brick");
-    southwall.Add(redbrick);
-    southwall.Add(blackbrick);
-    southwall.Accept(ant);
+//    redbrick->Add(blackbrick);  // won't compile. component should not add another one.
+    southwall->Add(redbrick);
+    southwall->Add(blackbrick);
+    northwall->Add(southwall);
+    northwall->Accept(ant);
+    delete northwall;
     return(0);
 }

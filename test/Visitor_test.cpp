@@ -12,7 +12,7 @@ class House
     : public::eutest::BaseVisitable<>
 {
 public:
-    EUTEST_VISITABLE();
+    VISITABLE();
     House()
         : height(3) {}
     const int height;
