@@ -9,33 +9,32 @@
 #include "Visitor.hpp"
 #include <boost/lambda/lambda.hpp>
 #include <iostream>
+
 class brick
-    : virtual public eutest::Leaf<brick>
+    : public eutest::Leaf<brick>
 {
 public:
-    brick() {}
-    virtual
-    ~brick() {}
     void
     Say()
     {
-    	if (Component* p = getParent())
-    	std::cout << "I'm in " << p->getName() << std::endl;
+        if (Component const* const p = getParent())
+            std::cout << "   I'm in: " << p->getName() << p << std::endl;
     }
 };
 
+class bigbrick
+    : public brick
+{};
+
 class wall
-    : virtual public eutest::Composite<wall>
+    : public eutest::Composite<wall>
 {
 public:
-    wall() {}
-    virtual
-    ~wall() {}
     void
     Say()
     {
-    	if (Component* p = getParent())
-    	std::cout << "I'm in " << p->getName() << std::endl;
+        if (Component const* const p = getParent())
+            std::cout << "   I'm in: " << p->getName() << p << std::endl;
     }
 };
 
@@ -45,9 +44,6 @@ class Insect
       public eutest::Visitor<wall>
 {
 public:
-    Insect() {}
-    virtual
-    ~Insect() {}
     virtual
     void
     Visit(brick& aPlace)
@@ -67,20 +63,22 @@ public:
 int
 main()
 {
-    Insect ant;
-    wall*  northwall  = new wall;
-    wall*  southwall  = new wall;
-    brick* redbrick   = new brick;
-    brick* blackbrick = new brick;
-    southwall->setName("south wall");
-    northwall->setName("North Wall");
-    redbrick->setName("red brick");
-    blackbrick->setName("black brick");
-//    redbrick->Add(blackbrick);  // won't compile. component should not add another one.
+    Insect    ant;
+    wall      rootwall;
+    wall*     southwall  = new wall;
+    brick*    redbrick   = new brick;
+    brick*    blackbrick = new brick;
+    bigbrick* largest    = new bigbrick;
+    rootwall.setName("north");
+    southwall->setName("south");
+    redbrick->setName("red");
+    blackbrick->setName("black");
+    largest->setName("largest");
+    //    redbrick->Add(blackbrick);  // won't compile. component should not add another one.
     southwall->Add(redbrick);
     southwall->Add(blackbrick);
-    northwall->Add(southwall);
-    northwall->Accept(ant);
-    delete northwall;
+    rootwall.Add(southwall);
+    rootwall.Add(largest);
+    rootwall.Accept(ant);
     return(0);
 }

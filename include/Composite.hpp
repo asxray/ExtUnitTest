@@ -15,13 +15,14 @@
 namespace eutest
 {
 class Component
-    : virtual public BaseVisitable<>
+    : public BaseVisitable<>
 {
+protected:
+    std::string      name;
+    Component const* parent;
 public:
-    VISITABLE();
-    Component() {}
-    virtual
-    ~Component() {}
+    Component()
+        : parent(0) {}
     const std::string&
     getName() const
     {
@@ -32,62 +33,57 @@ public:
     {
         this->name = name;
     }
-    Component*&
-    getParent()
+    Component const* const
+    getParent() const
     {
         return(parent);
     }
     void
-    setParent(Component* parent)
+    setParent(Component const* const parent)
     {
         this->parent = parent;
     }
-protected:
-    std::string name;
-    Component*  parent;
 };
 template<class T>
 class Leaf
-    : virtual public Component,
-      virtual public BaseVisitable<>
+    : public Component
 {
-public:
-    Leaf() {}
-    virtual
-    ~Leaf() {}
     virtual void
-    Accept(eutest::BaseVisitor& guest)
+    Accept(BaseVisitor& guest)
     {
-        AcceptImpl(*dynamic_cast<T*>(this), guest);
+        if (T * p = dynamic_cast<T*>(this))
+            AcceptImpl(*p, guest);
+        else
+            assert(0);
     }
 };
+
 template<class T>
 class Composite
-    : virtual public Component,
-      virtual public BaseVisitable<>
+    : public Component
 {
 protected:
     typedef boost::ptr_list<Component> Container;
+    Container children;
 public:
-    Composite()
-    {}
-    virtual
-    ~Composite() {}
     virtual void
-    Accept(eutest::BaseVisitor& guest)
+    Accept(BaseVisitor& guest)
     {
-        AcceptImpl(*dynamic_cast<T*>(this), guest);
+        if (T * p = dynamic_cast<T*>(this))
+            AcceptImpl(*p, guest);
+        else
+            assert(0);
         for (Container::iterator i = children.begin();
              children.end() != i;
              ++i)
             i->Accept(guest);
     }
     void
-    Add(Component* aChild)
+    Add(Component* const child)
     {
-        aChild->setParent(dynamic_cast<T*>(this));
+        child->setParent(dynamic_cast<T*>(this));
 #pragma omp critical
-        children.push_back(aChild);
+        children.push_back(child);
     }
     void
     Clear(void)
@@ -95,9 +91,6 @@ public:
 #pragma omp critical
         children.clear();
     }
-
-protected:
-    Container children;
 };
 } /* namespace eutest */
 
