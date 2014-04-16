@@ -1,2 +1,3 @@
-include_HEADERS = singleton.h TestBase.h TestCase.h TestSuite.h VisitorIF.h
+include_HEADERS = Composite.hpp Singleton.hpp Visitor.hpp
+
 
