@@ -9,7 +9,8 @@
 #define COMPOSITE_HPP_
 
 #include "Visitor.hpp"
-#include <boost/ptr_container/ptr_list.hpp>
+#include <boost/shared_ptr.hpp>
+#include <list>
 #include <string>
 
 namespace eutest
@@ -17,12 +18,16 @@ namespace eutest
 class Component
     : public BaseVisitable<>
 {
+public:
+    typedef boost::shared_ptr<Component> spComponent;
 protected:
     std::string      name;
     Component const* parent;
 public:
     Component()
         : parent(0) {}
+    virtual
+    ~Component() {}
     const std::string&
     getName() const
     {
@@ -48,13 +53,11 @@ template<class T>
 class Leaf
     : public Component
 {
+public:
     virtual void
     Accept(BaseVisitor& guest)
     {
-        if (T * p = dynamic_cast<T*>(this))
-            AcceptImpl(*p, guest);
-        else
-            assert(0);
+        AcceptImpl(dynamic_cast<T&>(*this), guest);
     }
 };
 
@@ -63,25 +66,23 @@ class Composite
     : public Component
 {
 protected:
-    typedef boost::ptr_list<Component> Container;
+    typedef std::list<spComponent> Container;
     Container children;
 public:
     virtual void
     Accept(BaseVisitor& guest)
     {
-        if (T * p = dynamic_cast<T*>(this))
-            AcceptImpl(*p, guest);
-        else
-            assert(0);
+        AcceptImpl(dynamic_cast<T&>(*this), guest);
         for (Container::iterator i = children.begin();
              children.end() != i;
              ++i)
-            i->Accept(guest);
+            (*i)->Accept(guest);
     }
     void
-    Add(Component* const child)
+    Add(spComponent child)
     {
-        child->setParent(dynamic_cast<T*>(this));
+        assert(child.get() != this);
+        child->setParent(this);
 #pragma omp critical
         children.push_back(child);
     }

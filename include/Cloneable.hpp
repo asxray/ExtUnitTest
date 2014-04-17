@@ -18,7 +18,7 @@ public:
 };
 
 #define CLONEABLE(X) \
-    virtual X* clone(void) const {return new X(*this);}
+    virtual X * clone(void) const {return new X(*this); }
 }     /* namespace eutest */
 
 #endif /* CLONEABLE_H_ */

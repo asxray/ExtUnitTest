@@ -7,7 +7,6 @@
 
 #include "Composite.hpp"
 #include "Visitor.hpp"
-#include <boost/lambda/lambda.hpp>
 #include <iostream>
 
 class brick
@@ -17,7 +16,7 @@ public:
     void
     Say()
     {
-        if (Component const* const p = getParent())
+        if (Component const* p = getParent())
             std::cout << "   I'm in: " << p->getName() << p << std::endl;
     }
 };
@@ -33,7 +32,7 @@ public:
     void
     Say()
     {
-        if (Component const* const p = getParent())
+        if (Component const* p = getParent())
             std::cout << "   I'm in: " << p->getName() << p << std::endl;
     }
 };
@@ -63,13 +62,13 @@ public:
 int
 main()
 {
-    Insect    ant;
-    wall      rootwall;
-    wall*     southwall  = new wall;
-    brick*    redbrick   = new brick;
-    brick*    blackbrick = new brick;
-    bigbrick* largest    = new bigbrick;
-    rootwall.setName("north");
+    Insect                      ant;
+    boost::shared_ptr<wall>     rootwall(new wall);
+    boost::shared_ptr<wall>     southwall(new wall);
+    boost::shared_ptr<brick>    redbrick(new brick);
+    boost::shared_ptr<brick>    blackbrick(new brick);
+    boost::shared_ptr<bigbrick> largest(new bigbrick);
+    rootwall->setName(std::string("root"));
     southwall->setName("south");
     redbrick->setName("red");
     blackbrick->setName("black");
@@ -77,8 +76,9 @@ main()
     //    redbrick->Add(blackbrick);  // won't compile. component should not add another one.
     southwall->Add(redbrick);
     southwall->Add(blackbrick);
-    rootwall.Add(southwall);
-    rootwall.Add(largest);
-    rootwall.Accept(ant);
+    // southwall->Add(southwall); /// this will assert;
+    rootwall->Add(southwall);
+    rootwall->Add(largest);
+    rootwall->Accept(ant);
     return(0);
 }
