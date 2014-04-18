@@ -11,6 +11,8 @@ class A
     : virtual public eutest::Cloneable
 {
 public:
+    virtual
+    ~A() {}
     virtual void
     say()
     {
@@ -23,6 +25,8 @@ class B
 
 {
 public:
+    virtual
+    ~B() {}
     CLONEABLE(B)
     virtual void
     say()

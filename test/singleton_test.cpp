@@ -1,7 +1,7 @@
 #include "Singleton.hpp"
 
 class testSingleton
-    : public singleton<testSingleton>
+    : public Singleton<testSingleton>
 {
 private:
     SINGLETON();

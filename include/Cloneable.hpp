@@ -13,6 +13,8 @@ namespace eutest
 class Cloneable
 {
 public:
+    virtual
+    ~Cloneable() {}
     virtual Cloneable*
     clone(void) const = 0;
 };

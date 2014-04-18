@@ -13,6 +13,8 @@ class brick
     : public eutest::Leaf<brick>
 {
 public:
+    virtual
+    ~brick() {}
     void
     Say()
     {
@@ -23,12 +25,19 @@ public:
 
 class bigbrick
     : public brick
-{};
+{
+public:
+    virtual
+    ~bigbrick() {}
+}
+;
 
 class wall
     : public eutest::Composite<wall>
 {
 public:
+    virtual
+    ~wall() {}
     void
     Say()
     {
@@ -43,6 +52,8 @@ class Insect
       public eutest::Visitor<wall>
 {
 public:
+    virtual
+    ~Insect() {}
     virtual
     void
     Visit(brick& aPlace)

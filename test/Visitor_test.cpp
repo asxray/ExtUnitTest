@@ -12,6 +12,8 @@ class House
     : public::eutest::BaseVisitable<>
 {
 public:
+    virtual
+    ~House() {}
     VISITABLE();
     House()
         : height(3) {}
@@ -22,6 +24,9 @@ class Cleaner
     : public::eutest::BaseVisitor,
       public::eutest::Visitor<House>
 {
+public:
+    virtual
+    ~Cleaner() {}
     void
     Visit(House& aHouse)
     {

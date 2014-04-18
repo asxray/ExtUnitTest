@@ -54,6 +54,8 @@ class Leaf
     : public Component
 {
 public:
+    virtual
+    ~Leaf() {}
     virtual void
     Accept(BaseVisitor& guest)
     {
@@ -69,6 +71,8 @@ protected:
     typedef std::list<spComponent> Container;
     Container children;
 public:
+    virtual
+    ~Composite() {}
     virtual void
     Accept(BaseVisitor& guest)
     {

@@ -4,10 +4,12 @@
 #include <boost/shared_ptr.hpp>
 
 template<typename T>
-class singleton
+class Singleton
 {
 public:
     typedef T BaseType;
+    virtual
+    ~Singleton() {}
     static T&
     Instance()
     {
@@ -25,12 +27,12 @@ private:
 
 template<typename T>
 boost::shared_ptr<T>
-singleton<T>::mInstance;
+Singleton<T>::mInstance;
 
 #define SINGLETON() \
-    friend BaseType& singleton<BaseType>::Instance(); \
+    friend BaseType & Singleton<BaseType>::Instance(); \
     friend void boost::checked_delete<>(BaseType*); \
     const BaseType& \
-    operator = (BaseType&);
+    operator = (BaseType&)
 
 #endif
