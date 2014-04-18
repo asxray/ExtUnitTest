@@ -46,8 +46,8 @@ public:
 
 
 class Sound
-    :public eutest::Observer<Alarm>,
-     public eutest::Observer<Door>
+    : public eutest::Observer<Alarm>,
+      public eutest::Observer<Door>
 {
 public:
     virtual

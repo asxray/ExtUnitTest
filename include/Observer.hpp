@@ -42,7 +42,7 @@ public:
         observers.push_back(obs);
     }
 protected:
-    std::list<std::shared_ptr<BaseObserver>> observers;
+    std::list<std::shared_ptr<BaseObserver> > observers;
     virtual
     void
     Notify() const = 0;

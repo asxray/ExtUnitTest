@@ -10,9 +10,10 @@
 #include <iostream>
 
 class brick
-    : public eutest::Leaf<brick>
+    : public eutest::Component
 {
 public:
+    VISITABLE();
     virtual
     ~brick() {}
     void
@@ -33,9 +34,10 @@ public:
 ;
 
 class wall
-    : public eutest::Composite<wall>
+    : public eutest::Composite
 {
 public:
+    VISITABLECOMPOSITE();
     virtual
     ~wall() {}
     void
@@ -73,12 +75,12 @@ public:
 int
 main()
 {
-    Insect                      ant;
-    boost::shared_ptr<wall>     rootwall(new wall);
-    boost::shared_ptr<wall>     southwall(new wall);
-    boost::shared_ptr<brick>    redbrick(new brick);
-    boost::shared_ptr<brick>    blackbrick(new brick);
-    boost::shared_ptr<bigbrick> largest(new bigbrick);
+    Insect                    ant;
+    std::shared_ptr<wall>     rootwall(new wall);
+    std::shared_ptr<wall>     southwall(new wall);
+    std::shared_ptr<brick>    redbrick(new brick);
+    std::shared_ptr<brick>    blackbrick(new brick);
+    std::shared_ptr<bigbrick> largest(new bigbrick);
     rootwall->setName(std::string("root"));
     southwall->setName("south");
     redbrick->setName("red");

@@ -9,8 +9,8 @@
 #define COMPOSITE_HPP_
 
 #include "Visitor.hpp"
-#include <boost/shared_ptr.hpp>
 #include <list>
+#include <memory>
 #include <string>
 
 namespace eutest
@@ -18,9 +18,8 @@ namespace eutest
 class Component
     : public BaseVisitable<>
 {
-public:
-    typedef boost::shared_ptr<Component> spComponent;
 protected:
+    typedef std::shared_ptr<Component> spComponent;
     std::string      name;
     Component const* parent;
 public:
@@ -44,47 +43,25 @@ public:
         return(parent);
     }
     void
-    setParent(Component const* const parent)
+    setParent(const Component& parent)
     {
-        this->parent = parent;
-    }
-};
-template<class T>
-class Leaf
-    : public Component
-{
-public:
-    virtual
-    ~Leaf() {}
-    virtual void
-    Accept(BaseVisitor& guest)
-    {
-        AcceptImpl(dynamic_cast<T&>(*this), guest);
+        this->parent = &parent;
     }
 };
 
-template<class T>
 class Composite
     : public Component
 {
 protected:
-    typedef std::list<spComponent> Container;
-    Container children;
+    std::list<spComponent> children;
 public:
     virtual
     ~Composite() {}
-    virtual void
-    Accept(BaseVisitor& guest)
-    {
-        AcceptImpl(dynamic_cast<T&>(*this), guest);
-        for (auto& i : children)
-            i->Accept(guest);
-    }
     void
     Add(spComponent child)
     {
         assert(child.get() != this);
-        child->setParent(this);
+        child->setParent(*this);
 #pragma omp critical
         children.push_back(child);
     }
@@ -94,7 +71,22 @@ public:
 #pragma omp critical
         children.clear();
     }
+protected:
+    template<class T>
+    void
+    Traverse(
+        T&           visited,
+        BaseVisitor& guest
+        )
+    {
+        AcceptImpl(visited, guest);
+        for (auto& i : children)
+            i->Accept(guest);
+    }
 };
+#define VISITABLECOMPOSITE() \
+    virtual void Accept(eutest::BaseVisitor & guest) \
+    {return Traverse(*this, guest); }
 } /* namespace eutest */
 
 #endif /* COMPOSITE_HPP_ */
