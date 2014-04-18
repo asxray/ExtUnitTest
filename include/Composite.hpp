@@ -77,10 +77,8 @@ public:
     Accept(BaseVisitor& guest)
     {
         AcceptImpl(dynamic_cast<T&>(*this), guest);
-        for (Container::iterator i = children.begin();
-             children.end() != i;
-             ++i)
-            (*i)->Accept(guest);
+        for (auto& i : children)
+            i->Accept(guest);
     }
     void
     Add(spComponent child)
