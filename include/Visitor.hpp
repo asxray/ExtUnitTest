@@ -114,7 +114,7 @@ protected:
 
 #define VISITABLE() \
     virtual ReturnType Accept(eutest::BaseVisitor & guest) \
-    {return AcceptImpl(*this, guest); };
+    {return AcceptImpl(*this, guest); }
 
 #define CONST_VISITABLE() \
     virtual ReturnType Accept(eutest::BaseVisitor & guest) const \

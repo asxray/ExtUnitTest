@@ -1,3 +1,5 @@
-include_HEADERS = Composite.hpp Singleton.hpp Visitor.hpp
-
-
+include_HEADERS = \
+Composite.hpp \
+Observer.hpp \
+Singleton.hpp \
+Visitor.hpp
