@@ -12,7 +12,7 @@
 
 #include <assert.h>
 
-namespace eutest
+namespace dp
 {
 class BaseVisitor
 {
@@ -113,7 +113,7 @@ protected:
 };
 
 #define VISITABLE() \
-    virtual ReturnType Accept(eutest::BaseVisitor & guest) \
+    virtual ReturnType Accept(dp::BaseVisitor & guest) \
     {return AcceptImpl(*this, guest); }
 
 #define CONST_VISITABLE() \

@@ -10,7 +10,7 @@
 #include <iostream>
 
 class brick
-    : public eutest::Component
+    : public dp::Component
 {
 public:
     VISITABLE();
@@ -34,7 +34,7 @@ public:
 ;
 
 class wall
-    : public eutest::Composite
+    : public dp::Composite
 {
 public:
     VISITABLECOMPOSITE();
@@ -49,9 +49,9 @@ public:
 };
 
 class Insect
-    : public eutest::BaseVisitor,
-      public eutest::Visitor<brick>,
-      public eutest::Visitor<wall>
+    : public dp::BaseVisitor,
+      public dp::Visitor<brick>,
+      public dp::Visitor<wall>
 {
 public:
     virtual

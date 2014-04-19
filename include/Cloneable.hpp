@@ -8,7 +8,7 @@
 #ifndef CLONEABLE_H_
 #define CLONEABLE_H_
 
-namespace eutest
+namespace dp
 {
 class Cloneable
 {

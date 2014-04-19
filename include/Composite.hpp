@@ -13,7 +13,7 @@
 #include <memory>
 #include <string>
 
-namespace eutest
+namespace dp
 {
 class Component
     : public BaseVisitable<>
@@ -85,7 +85,7 @@ protected:
     }
 };
 #define VISITABLECOMPOSITE() \
-    virtual void Accept(eutest::BaseVisitor & guest) \
+    virtual void Accept(dp::BaseVisitor & guest) \
     {return Traverse(*this, guest); }
 } /* namespace eutest */
 

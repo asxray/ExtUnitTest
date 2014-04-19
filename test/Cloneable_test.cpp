@@ -8,7 +8,7 @@
 #include "Cloneable.hpp"
 #include <iostream>
 class A
-    : virtual public eutest::Cloneable
+    : virtual public dp::Cloneable
 {
 public:
     virtual

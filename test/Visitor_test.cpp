@@ -9,7 +9,7 @@
 #include <iostream>
 
 class House
-    : public::eutest::BaseVisitable<>
+    : public::dp::BaseVisitable<>
 {
 public:
     virtual
@@ -21,8 +21,8 @@ public:
 };
 
 class Cleaner
-    : public::eutest::BaseVisitor,
-      public::eutest::Visitor<House>
+    : public::dp::BaseVisitor,
+      public::dp::Visitor<House>
 {
 public:
     virtual

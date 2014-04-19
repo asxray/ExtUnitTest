@@ -7,11 +7,9 @@
 
 #include "Observer.hpp"
 #include <iostream>
-namespace eutest
-{} /* namespace eutest */
 
 class Alarm
-    : public eutest::Subject
+    : public dp::Subject
 {
 public:
     virtual
@@ -31,7 +29,7 @@ public:
 
 
 class Door
-    : public eutest::Subject
+    : public dp::Subject
 {
 public:
     virtual
@@ -46,8 +44,8 @@ public:
 
 
 class Sound
-    : public eutest::Observer<Alarm>,
-      public eutest::Observer<Door>
+    : public dp::Observer<Alarm>,
+      public dp::Observer<Door>
 {
 public:
     virtual
@@ -72,7 +70,7 @@ public:
 
 
 class Light
-    : public eutest::Observer<Alarm>
+    : public dp::Observer<Alarm>
 {
 public:
     virtual
