@@ -11,12 +11,10 @@ namespace eut
 {
 TestStatus::TestStatus()
     : status(TestStatus::WAITING)
-{
-}
+{}
 
 TestStatus::~TestStatus()
-{
-}
+{}
 
 TestStatus::STATUS
 TestStatus::getStatus() const

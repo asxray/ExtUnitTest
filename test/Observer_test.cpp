@@ -6,8 +6,8 @@
  */
 
 #include "Observer.hpp"
-#include <iostream>
 #include <boost/test/unit_test.hpp>
+#include <iostream>
 
 class Alarm
     : public dp::Subject

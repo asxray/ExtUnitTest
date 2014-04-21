@@ -6,10 +6,10 @@
  */
 
 #include "Composite.hpp"
-#include "Visitor.hpp"
-#include <iostream>
 #include "TestStatus.h"
+#include "Visitor.hpp"
 #include <boost/test/unit_test.hpp>
+#include <iostream>
 
 
 class brick

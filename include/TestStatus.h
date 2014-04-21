@@ -8,26 +8,29 @@
 #ifndef TESTSTATUS_H_
 #define TESTSTATUS_H_
 
-namespace eut {
-
-class TestStatus {
+namespace eut
+{
+class TestStatus
+{
 public:
-	enum STATUS
-	{
-		WAITING,
-		START,
-		RUNNING,
-		END
-	};
-	TestStatus();
-	virtual ~TestStatus();
-	STATUS getStatus() const;
-	void setStatus(STATUS status);
+    enum STATUS
+    {
+        WAITING,
+        START,
+        RUNNING,
+        END
+    };
+    TestStatus();
+    virtual
+    ~TestStatus();
+    STATUS
+    getStatus() const;
+    void
+    setStatus(STATUS status);
 
 protected:
-	STATUS status;
+    STATUS status;
 };
-
 } /* namespace eut */
 
 #endif /* TESTSTATUS_H_ */

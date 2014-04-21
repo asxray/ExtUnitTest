@@ -5,8 +5,11 @@ AC_PREREQ([2.68])
 AC_INIT([ExtUnitTest], [0.1])
 AC_CONFIG_SRCDIR([src/Makefile.am])
 AC_CONFIG_HEADERS([config.h])
+
 # automake
 AM_INIT_AUTOMAKE([-Wall])
+# AM_SILENT_RULES([yes])
+
 # libtool
 AC_PROG_LIBTOOL
 

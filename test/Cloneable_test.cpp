@@ -6,7 +6,9 @@
  */
 
 #include "Cloneable.hpp"
+#include <boost/test/unit_test.hpp>
 #include <iostream>
+
 class A
     : virtual public dp::Cloneable
 {
@@ -35,8 +37,7 @@ public:
     }
 };
 
-int
-main()
+BOOST_AUTO_TEST_CASE(clone)
 {
     B  b;
     A* bb = b.clone();

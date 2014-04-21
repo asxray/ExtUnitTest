@@ -1,6 +1,5 @@
-#include <boost/test/unit_test.hpp>
-
 #include "Singleton.hpp"
+#include <boost/test/unit_test.hpp>
 
 class testSingleton
     : public Singleton<testSingleton>

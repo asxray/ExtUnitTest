@@ -4,9 +4,9 @@
  *  Created on: Apr 14, 2014
  *      Author: josephx
  */
-#include <boost/test/unit_test.hpp>
 
 #include "Visitor.hpp"
+#include <boost/test/unit_test.hpp>
 #include <iostream>
 
 class House
