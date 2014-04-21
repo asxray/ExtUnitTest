@@ -31,6 +31,11 @@ public:
         std::ostream&,
         TestResult&
         );
+    friend TestResult&
+    operator << (
+        TestResult&,
+        std::string
+        );
 protected:
     bool        passed;
     std::string outlog;

@@ -41,6 +41,16 @@ operator << (
     return(ostr);
 }
 
+TestResult&
+operator << (
+    TestResult& testresult,
+    std::string str
+    )
+{
+    testresult.errorlog += str;
+    return(testresult);
+}
+
 bool
 TestResult::isPassed() const
 {
