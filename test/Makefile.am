@@ -5,6 +5,8 @@ AM_CXXFLAGS += -D BOOST_TEST_DYN_LINK -D BOOST_TEST_MAIN
 AM_LDFLAGS = -lboost_unit_test_framework \
 	../src/libextunittest.la
 
+TESTS_ENVIRONMENT = valgrind -q
+
 TESTS = \
 Composite_test \
 Observer_test \
