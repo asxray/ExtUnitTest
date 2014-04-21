@@ -27,7 +27,7 @@ class B
 public:
     virtual
     ~B() {}
-    CLONEABLE(B)
+    CLONE(B)
     virtual void
     say()
     {

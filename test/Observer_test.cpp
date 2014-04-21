@@ -7,6 +7,7 @@
 
 #include "Observer.hpp"
 #include <iostream>
+#include <boost/test/unit_test.hpp>
 
 class Alarm
     : public dp::Subject
@@ -84,8 +85,7 @@ public:
     }
 };
 
-int
-main()
+BOOST_AUTO_TEST_CASE(observer)
 {
     std::shared_ptr<Alarm> bigAlarm(new Alarm);
     Door                   Gate;
@@ -96,5 +96,4 @@ main()
     Gate.Attach(sound);
     bigAlarm->ON();
     Gate.Open();
-    return(0);
 }

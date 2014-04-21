@@ -1,7 +1,8 @@
 include $(top_srcdir)/common.am
 # libtools target
 lib_LTLIBRARIES = libextunittest.la
-libextunittest_la_SOURCES = TestBase.cpp
+libextunittest_la_SOURCES = \
+ TestStatus.cpp
 # flags
-libextunittest_la_LDFLAGS =
-libextunittest_la_LIBADD =
+# libextunittest_la_LDFLAGS =
+# libextunittest_la_LIBADD =

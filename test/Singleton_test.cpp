@@ -1,3 +1,5 @@
+#include <boost/test/unit_test.hpp>
+
 #include "Singleton.hpp"
 
 class testSingleton
@@ -17,8 +19,7 @@ public:
     }
 };
 
-int
-main()
+BOOST_AUTO_TEST_CASE(singleton)
 {
     //	testSingleton ats; // can't compile
     //	ats.say();

@@ -7,8 +7,8 @@
  *      From: loki lib
  */
 
-#ifndef VISITOR_H_
-#define VISITOR_H_
+#ifndef VISITOR_HPP_
+#define VISITOR_HPP_
 
 #include <assert.h>
 

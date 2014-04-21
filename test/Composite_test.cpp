@@ -8,6 +8,9 @@
 #include "Composite.hpp"
 #include "Visitor.hpp"
 #include <iostream>
+#include "TestStatus.h"
+#include <boost/test/unit_test.hpp>
+
 
 class brick
     : public dp::Component
@@ -72,8 +75,7 @@ public:
     }
 };
 
-int
-main()
+BOOST_AUTO_TEST_CASE(composite)
 {
     Insect                    ant;
     std::shared_ptr<wall>     rootwall(new wall);
@@ -93,5 +95,4 @@ main()
     rootwall->Add(southwall);
     rootwall->Add(largest);
     rootwall->Accept(ant);
-    return(0);
 }

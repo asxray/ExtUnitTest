@@ -5,8 +5,8 @@
  *      Author: josephx
  */
 
-#ifndef CLONEABLE_H_
-#define CLONEABLE_H_
+#ifndef CLONEABLE_HPP_
+#define CLONEABLE_HPP_
 
 namespace dp
 {
@@ -19,7 +19,7 @@ public:
     clone(void) const = 0;
 };
 
-#define CLONEABLE(X) \
+#define CLONE(X) \
     virtual X * clone(void) const {return new X(*this); }
 }     /* namespace eutest */
 

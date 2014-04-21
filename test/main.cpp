@@ -1,6 +1,4 @@
-#include "Visitor.hpp"
-int
-main()
-{
-    return(0);
-}
+
+#define BOOST_TEST_MODULE eut
+
+#include <boost/test/unit_test.hpp>

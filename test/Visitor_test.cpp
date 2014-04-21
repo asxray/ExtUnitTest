@@ -4,6 +4,7 @@
  *  Created on: Apr 14, 2014
  *      Author: josephx
  */
+#include <boost/test/unit_test.hpp>
 
 #include "Visitor.hpp"
 #include <iostream>
@@ -34,11 +35,9 @@ public:
     }
 };
 
-int
-main()
+BOOST_AUTO_TEST_CASE(visitor)
 {
     House   whiteHouse;
     Cleaner bush;
     whiteHouse.Accept(bush);
-    return(0);
 }
