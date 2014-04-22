@@ -7,16 +7,17 @@ AM_LDFLAGS = -lboost_unit_test_framework \
 
 TESTS_ENVIRONMENT = valgrind -q
 
-TESTS = \
-Cloneable_test \
-Composite_test \
-Observer_test \
-Singleton_test \
-TestBody_test \
-TestCase_test \
-TestResource_test \
-TestResult_test \
-TestStatus_test \
+TESTS =\
+Cloneable_test\
+Composite_test\
+Observer_test\
+Singleton_test\
+TestBody_test\
+TestCase_test\
+TestResource_test\
+TestResult_test\
+TestStatus_test\
+TestSuite_test\
 Visitor_test
 
 check_PROGRAMS = $(TESTS)

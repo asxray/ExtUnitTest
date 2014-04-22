@@ -9,6 +9,7 @@
 #define TESTCASE_H_
 
 #include "Cloneable.hpp"
+#include "Composite.hpp"
 #include "TestBody.h"
 #include "TestResource.h"
 #include  "TestResult.h"
@@ -21,12 +22,15 @@ class TestCase
       public TestResource,
       public TestStatus,
       public TestResult,
-      public dp::Cloneable
+      public dp::Cloneable,
+      public dp::Component
 {
 public:
     TestCase();
     virtual
     ~TestCase();
+    virtual void
+    Accept(dp::BaseVisitor& guest);
 };
 } /* namespace eut */
 

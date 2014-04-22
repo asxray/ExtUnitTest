@@ -3,12 +3,13 @@ include $(top_srcdir)/common.am
 lib_LTLIBRARIES = libextunittest.la
 
 libextunittest_la_SOURCES = \
-	Composite.cpp \
-	TestBody.cpp \
-	TestCase.cpp \
-	TestResource.cpp \
-	TestResult.cpp \
-	TestStatus.cpp
+Composite.cpp\
+TestBody.cpp\
+TestCase.cpp\
+TestResource.cpp\
+TestResult.cpp\
+TestStatus.cpp\
+TestSuite.cpp
 
 # flags
 # libextunittest_la_LDFLAGS =

@@ -1,25 +1,26 @@
 /*
- * TestCase.cpp
+ * TestSuite.cpp
  *
  *  Created on: Apr 22, 2014
  *      Author: josephx
  */
 
-#include "TestCase.h"
+#include "TestSuite.h"
 
 namespace eut
 {
-TestCase::TestCase()
+TestSuite::TestSuite()
 {
     // TODO Auto-generated constructor stub
 }
-TestCase::~TestCase()
+
+TestSuite::~TestSuite()
 {
     // TODO Auto-generated destructor stub
 }
 void
-TestCase::Accept(dp::BaseVisitor& guest)
+TestSuite::Accept(dp::BaseVisitor& guest)
 {
-    return(AcceptImpl(*this, guest));
+    return(Traverse(*this, guest));
 }
 } /* namespace eut */
