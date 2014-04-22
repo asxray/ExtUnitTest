@@ -1,1 +1,4 @@
-SUBDIRS = src test
+SUBDIRS = \
+inc\
+src\
+test

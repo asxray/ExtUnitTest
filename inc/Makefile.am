@@ -1,4 +1,4 @@
-include_HEADERS = \
+nobase_include_HEADERS = \
 Cloneable.hpp \
 Composite.hpp \
 Observer.hpp \
