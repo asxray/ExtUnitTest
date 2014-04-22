@@ -20,33 +20,22 @@ class Component
 {
 protected:
     typedef std::shared_ptr<Component> spComponent;
-    std::string      name;
     Component const* parent;
+    std::string      name;
 public:
-    Component()
-        : parent(0) {}
+    Component();
     virtual
-    ~Component() {}
+    ~Component();
     const std::string&
-    getName() const
-    {
-        return(name);
-    }
+    getName() const;
     void
-    setName(const std::string& name)
-    {
-        this->name = name;
-    }
+    setName(const std::string& name);
     Component const* const
-    getParent() const
-    {
-        return(parent);
-    }
+    getParent() const;
     void
-    setParent(const Component& parent)
-    {
-        this->parent = &parent;
-    }
+    setParent(const Component& parent);
+    const std::string
+    getFullname() const;
 };
 
 class Composite
@@ -56,21 +45,11 @@ protected:
     std::list<spComponent> children;
 public:
     virtual
-    ~Composite() {}
+    ~Composite();
     void
-    Add(spComponent child)
-    {
-        assert(child.get() != this);
-        child->setParent(*this);
-#pragma omp critical
-        children.push_back(child);
-    }
+    Add(spComponent child);
     void
-    Clear(void)
-    {
-#pragma omp critical
-        children.clear();
-    }
+    Clear(void);
 protected:
     template<class T>
     void

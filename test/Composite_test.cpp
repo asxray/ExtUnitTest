@@ -6,33 +6,31 @@
  */
 
 #include "Composite.hpp"
-#include "TestStatus.h"
 #include "Visitor.hpp"
 #include <boost/test/unit_test.hpp>
-#include <iostream>
-
+#include <ostream>
 
 class brick
     : public dp::Component
 {
 public:
     VISITABLE();
+    brick()
+        : n(1) {}
     virtual
     ~brick() {}
-    void
-    Say()
-    {
-        if (Component const* p = getParent())
-            std::cout << "   I'm in: " << p->getName() << p << std::endl;
-    }
+    int n;
 };
 
 class bigbrick
     : public brick
 {
 public:
+    bigbrick()
+        : n(2) {}
     virtual
     ~bigbrick() {}
+    int n;
 }
 ;
 
@@ -41,14 +39,11 @@ class wall
 {
 public:
     VISITABLECOMPOSITE();
+    wall()
+        : n(3) {}
     virtual
     ~wall() {}
-    void
-    Say()
-    {
-        if (Component const* p = getParent())
-            std::cout << "   I'm in: " << p->getName() << p << std::endl;
-    }
+    int n;
 };
 
 class Insect
@@ -57,22 +52,29 @@ class Insect
       public dp::Visitor<wall>
 {
 public:
+    Insect()
+        : wallcount(0),
+          brickcount(0) {}
     virtual
     ~Insect() {}
     virtual
     void
     Visit(brick& aPlace)
     {
-        std::cout << " clambing on brick: " << aPlace.getName() << std::endl;
-        aPlace.Say();
+        ++brickcount;
+        BOOST_CHECK_EQUAL(aPlace.n, 1);
+        std::cout << aPlace.getFullname() << std::endl;
     }
     virtual
     void
     Visit(wall& aPlace)
     {
-        std::cout << " clambing on wall: " << aPlace.getName() << std::endl;
-        aPlace.Say();
+        ++wallcount;
+        BOOST_CHECK_EQUAL(aPlace.n, 3);
+        std::cout << aPlace.getFullname() << std::endl;
     }
+    int wallcount;
+    int brickcount;
 };
 
 BOOST_AUTO_TEST_CASE(composite)
@@ -95,4 +97,6 @@ BOOST_AUTO_TEST_CASE(composite)
     rootwall->Add(southwall);
     rootwall->Add(largest);
     rootwall->Accept(ant);
+    BOOST_CHECK_EQUAL(2, ant.wallcount);
+    BOOST_CHECK_EQUAL(3, ant.brickcount);
 }

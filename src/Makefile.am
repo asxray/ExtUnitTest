@@ -1,7 +1,9 @@
 include $(top_srcdir)/common.am
 # libtools target
 lib_LTLIBRARIES = libextunittest.la
+
 libextunittest_la_SOURCES = \
+	Composite.cpp \
 	TestStatus.cpp \
 	TestResult.cpp \
 	TestResource.cpp
