@@ -4,9 +4,11 @@ lib_LTLIBRARIES = libextunittest.la
 
 libextunittest_la_SOURCES = \
 	Composite.cpp \
-	TestStatus.cpp \
+	TestBody.cpp \
+	TestCase.cpp \
+	TestResource.cpp \
 	TestResult.cpp \
-	TestResource.cpp
+	TestStatus.cpp
 
 # flags
 # libextunittest_la_LDFLAGS =

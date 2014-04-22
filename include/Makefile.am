@@ -6,4 +6,6 @@ Singleton.hpp \
 Visitor.hpp \
 TestResource.h \
 TestResult.h \
-TestStatus.h
+TestStatus.h \
+TestBody.h \
+TestCase.h

@@ -10,16 +10,17 @@
 #include <iostream>
 
 class A
-    : virtual public dp::Cloneable
+    : public dp::Cloneable
 {
 public:
+    virtual int
+    num()
+    {
+        return(1);
+    }
     virtual
     ~A() {}
-    virtual void
-    say()
-    {
-        std::cout << "A " << std::endl;
-    }
+    CLONE(A);
 };
 
 class B
@@ -27,20 +28,20 @@ class B
 
 {
 public:
+    virtual int
+    num()
+    {
+        return(2);
+    }
     virtual
     ~B() {}
-    CLONE(B)
-    virtual void
-    say()
-    {
-        std::cout << "B " << std::endl;
-    }
+    CLONE(B);
 };
 
-BOOST_AUTO_TEST_CASE(clone)
+BOOST_AUTO_TEST_CASE(clonetest)
 {
     B  b;
     A* bb = b.clone();
-    bb->say();
+    BOOST_CHECK_EQUAL(2, bb->num());
     delete bb;
 }
