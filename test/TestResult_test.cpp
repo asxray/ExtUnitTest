@@ -16,6 +16,6 @@ BOOST_AUTO_TEST_CASE(testresult)
     result.setPassed(true);
     BOOST_CHECK_EQUAL(true, result.isPassed());
     BOOST_CHECK_EQUAL("PASSED\n", result.ToString());
-    result << std::string("abc");
-    BOOST_CHECK_EQUAL("PASSED\nabc", result.ToString());
+    result << std::string("abc") << "what";
+    BOOST_CHECK_EQUAL("PASSED\nabcwhat", result.ToString());
 }

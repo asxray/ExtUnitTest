@@ -13,7 +13,7 @@ Observer_test \
 Singleton_test \
 TestResult_test \
 TestStatus_test \
-Visitor_test
-
+Visitor_test \
+TestResource_test
 
 check_PROGRAMS = $(TESTS)

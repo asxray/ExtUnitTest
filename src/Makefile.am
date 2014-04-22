@@ -3,7 +3,8 @@ include $(top_srcdir)/common.am
 lib_LTLIBRARIES = libextunittest.la
 libextunittest_la_SOURCES = \
 	TestStatus.cpp \
-	TestResult.cpp
+	TestResult.cpp \
+	TestResource.cpp
 
 # flags
 # libextunittest_la_LDFLAGS =

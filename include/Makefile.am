@@ -1,5 +1,9 @@
 include_HEADERS = \
+Cloneable.hpp \
 Composite.hpp \
 Observer.hpp \
 Singleton.hpp \
-Visitor.hpp
+Visitor.hpp \
+TestResource.h \
+TestResult.h \
+TestStatus.h
