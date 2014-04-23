@@ -2,7 +2,8 @@
 #define SINGLETON_HPP
 
 #include <boost/shared_ptr.hpp>
-
+namespace dp
+{
 template<typename T>
 class Singleton
 {
@@ -34,5 +35,5 @@ Singleton<T>::mInstance;
     friend void boost::checked_delete<>(BaseType*); \
     const BaseType& \
     operator = (BaseType&)
-
+}
 #endif

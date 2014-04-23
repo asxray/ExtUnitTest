@@ -7,4 +7,4 @@ mkdir -p /tmp/ext/built
 mkdir -p /tmp/ext/inst
 cd /tmp/ext/built
 $PDIR/configure CXXFLAGS='-O0 -ggdb' --enable-shared --srcdir=$PDIR  --prefix=/tmp/ext/inst
-make -j check install
+make -j check

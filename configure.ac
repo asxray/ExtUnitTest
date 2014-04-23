@@ -22,7 +22,6 @@ AC_PROG_CC
 # Checks for library functions.
 AC_CONFIG_FILES([
 Makefile
-inc/Makefile
 src/Makefile
 test/Makefile
 ])

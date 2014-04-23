@@ -2,7 +2,7 @@
 #include <boost/test/unit_test.hpp>
 
 class testSingleton
-    : public Singleton<testSingleton>
+    : public dp::Singleton<testSingleton>
 {
 private:
     SINGLETON();

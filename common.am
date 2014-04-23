@@ -1,1 +1,1 @@
-AM_CXXFLAGS = -I$(top_srcdir)/inc -std=c++11 -fopenmp -Wall -Werror
+AM_CXXFLAGS = -std=c++11 -fopenmp -Wall -Werror

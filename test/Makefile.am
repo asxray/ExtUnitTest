@@ -1,7 +1,7 @@
 include $(top_srcdir)/common.am
 
 AM_DEFAULT_SOURCE_EXT = .cpp
-AM_CXXFLAGS += -D BOOST_TEST_DYN_LINK -D BOOST_TEST_MAIN
+AM_CXXFLAGS += -D BOOST_TEST_DYN_LINK -D BOOST_TEST_MAIN -I$(top_srcdir)/src
 AM_LDFLAGS = -lboost_unit_test_framework \
 	../src/libextunittest.la
 
@@ -18,6 +18,7 @@ TestResource_test\
 TestResult_test\
 TestStatus_test\
 TestSuite_test\
-Visitor_test
+Visitor_test\
+RootTestSuite_test
 
 check_PROGRAMS = $(TESTS)
