@@ -8,16 +8,21 @@
 #ifndef TESTSTATUS_H_
 #define TESTSTATUS_H_
 
+#include "Observer.hpp"
+
 namespace eut
 {
 class TestStatus
+    : public dp::Subject
 {
 public:
     enum STATUS
     {
         WAITING,
         START,
+        SETUP,
         RUNNING,
+        TEARDOWN,
         END
     };
     TestStatus();

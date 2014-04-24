@@ -19,6 +19,7 @@ TestResult_test\
 TestStatus_test\
 TestSuite_test\
 Visitor_test\
-RootTestSuite_test
+RootTestSuite_test\
+BaseTestRunner_test
 
 check_PROGRAMS = $(TESTS)

@@ -10,7 +10,8 @@ TestResource.cpp\
 TestResult.cpp\
 TestStatus.cpp\
 TestSuite.cpp\
-RootTestSuite.cpp
+RootTestSuite.cpp\
+BaseTestRunner.cpp
 
 
 nobase_include_HEADERS = \
@@ -25,7 +26,8 @@ TestStatus.h\
 TestSuite.h\
 TestBody.h\
 TestCase.h\
-RootTestSuite.h
+RootTestSuite.h\
+BaseTestRunner.h
 
 
 # flags

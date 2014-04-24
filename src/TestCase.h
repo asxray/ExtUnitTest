@@ -30,7 +30,8 @@ public:
     virtual
     ~TestCase();
     virtual void
-    Accept(dp::BaseVisitor& guest);
+    Accept(dp::BaseVisitor* guest);
+    NOTIFY();
 };
 } /* namespace eut */
 

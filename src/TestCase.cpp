@@ -18,7 +18,7 @@ TestCase::~TestCase()
     // TODO Auto-generated destructor stub
 }
 void
-TestCase::Accept(dp::BaseVisitor& guest)
+TestCase::Accept(dp::BaseVisitor* guest)
 {
     return(AcceptImpl(*this, guest));
 }

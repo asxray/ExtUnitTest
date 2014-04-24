@@ -6,30 +6,27 @@
  */
 
 #include "TestResult.h"
-#include <sstream>
+#include <ostream>
 
 namespace eut
 {
+std::map<TestResult::RET, std::string>
+TestResult::ret2Str;
+
 TestResult::TestResult()
-    : passed(false)
+    : ret(RET::WAIVED)
 {
-    // TODO Auto-generated constructor stub
+    if (ret2Str.empty())
+    {
+        ret2Str[TestResult::RET::PASSED] = "PASSED";
+        ret2Str[TestResult::RET::FAILED] = "FAILED";
+        ret2Str[TestResult::RET::ERROR]  = "ERROR";
+        ret2Str[TestResult::RET::WAIVED] = "WAIVED";
+    }
 }
 
 TestResult::~TestResult()
-{
-    // TODO Auto-generated destructor stub
-}
-
-const std::string&
-TestResult::ToString()
-{
-    std::ostringstream outstr;
-    outstr << (passed ? "PASSED" : "FAILED") << std::endl
-           << errorlog;
-    outlog = outstr.str();
-    return(outlog);
-}
+{}
 
 std::ostream&
 operator << (
@@ -37,29 +34,37 @@ operator << (
     TestResult&   res
     )
 {
-    ostr << res.ToString();
+    ostr
+    << TestResult::ret2Str.at(res.ret) << std::endl
+    << res.errorlog;
     return(ostr);
 }
 
 TestResult&
 operator << (
-    TestResult& testresult,
+    TestResult& r,
     std::string str
     )
 {
-    testresult.errorlog += str;
-    return(testresult);
+    r.errorlog += str;
+    return(r);
 }
 
-bool
-TestResult::isPassed() const
+TestResult::RET
+TestResult::getRet() const
 {
-    return(passed);
+    return(ret);
 }
 
 void
-TestResult::setPassed(bool passed)
+TestResult::setRet(RET result)
 {
-    this->passed = passed;
+    this->ret = result;
+}
+
+const std::string&
+TestResult::getErrorlog() const
+{
+    return(errorlog);
 }
 } /* namespace eut */

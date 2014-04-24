@@ -8,15 +8,19 @@
 #include "TestStatus.h"
 #include <boost/test/unit_test.hpp>
 
+class MyStatus
+    : public eut::TestStatus
+{
+public:
+    virtual
+    ~MyStatus() {}
+    NOTIFY()
+};
+
 BOOST_AUTO_TEST_CASE(init)
 {
-    eut::TestStatus stat;
+    MyStatus stat;
     BOOST_CHECK_EQUAL(stat.getStatus(), eut::TestStatus::WAITING);
-}
-
-BOOST_AUTO_TEST_CASE(running)
-{
-    eut::TestStatus stat;
     stat.setStatus(eut::TestStatus::RUNNING);
     BOOST_CHECK_EQUAL(stat.getStatus(), eut::TestStatus::RUNNING);
 }

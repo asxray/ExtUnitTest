@@ -4,23 +4,21 @@
 class testSingleton
     : public dp::Singleton<testSingleton>
 {
-private:
-    SINGLETON();
-    testSingleton() {}
-    testSingleton(testSingleton&) {}
-    virtual
-    ~testSingleton() {}
+    SINGLETON(testSingleton);
 public:
-    void
+    std::string
     say()
     {
-        std::cout << "hello" << std::endl;
+        return("hello");
     }
 };
 
+testSingleton::testSingleton() {}
+testSingleton::testSingleton(testSingleton& t) {}
+testSingleton::~testSingleton() {}
+
 BOOST_AUTO_TEST_CASE(singleton)
 {
-    //	testSingleton ats; // can't compile
-    //	ats.say();
-    testSingleton::Instance().say();
+    // testSingleton ats; // can't compile
+    BOOST_CHECK_EQUAL("hello", testSingleton::Instance().say());
 }

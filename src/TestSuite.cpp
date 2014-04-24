@@ -19,7 +19,7 @@ TestSuite::~TestSuite()
     // TODO Auto-generated destructor stub
 }
 void
-TestSuite::Accept(dp::BaseVisitor& guest)
+TestSuite::Accept(dp::BaseVisitor* guest)
 {
     return(Traverse(*this, guest));
 }

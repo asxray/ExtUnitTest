@@ -50,7 +50,7 @@ struct DefaultCatchAll
     static R
     OnUnknownVisitor(
         T&,
-        BaseVisitor&
+        BaseVisitor const*
         )
     {
         assert(0);
@@ -73,16 +73,16 @@ public:
     virtual
     ~BaseVisitable() {}
     virtual ReturnType
-    Accept(BaseVisitor&) = 0;
+    Accept(BaseVisitor*) = 0;
 protected:
     template<class T>
     static ReturnType
     AcceptImpl(
         T&           visited,
-        BaseVisitor& guest
+        BaseVisitor* guest
         )
     {
-        if (Visitor<T, R>* p = dynamic_cast<Visitor<T, R>*>(&guest))
+        if (auto* p = dynamic_cast<Visitor<T, R>*>(guest))
             return(p->Visit(visited));
         return(CatchAll<R, T>::OnUnknownVisitor(visited, guest));
     }
@@ -97,27 +97,27 @@ public:
     virtual
     ~BaseVisitable() {}
     virtual ReturnType
-    Accept(BaseVisitor&) const = 0;
+    Accept(BaseVisitor const*) const = 0;
 protected:
     template<class T>
     static ReturnType
     AcceptImpl(
         const T&     visited,
-        BaseVisitor& guest
+        BaseVisitor* guest
         )
     {
-        if (Visitor<T, R, true>* p = dynamic_cast<Visitor<T, R, true>*>(&guest))
+        if (auto* p = dynamic_cast<Visitor<T, R, true>*>(guest))
             return(p->Visit(visited));
         return(CatchAll<R, T>::OnUnknownVisitor(const_cast<T&>(visited), guest));
     }
 };
 
 #define VISITABLE() \
-    virtual ReturnType Accept(dp::BaseVisitor & guest) \
+    virtual ReturnType Accept(dp::BaseVisitor * guest) \
     {return AcceptImpl(*this, guest); }
 
 #define CONST_VISITABLE() \
-    virtual ReturnType Accept(eutest::BaseVisitor & guest) const \
+    virtual ReturnType Accept(eutest::BaseVisitor * guest) const \
     {return AcceptImpl(*this, guest); }
 } /* namespace eutest */
 

@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE(composite)
     // southwall->Add(southwall); /// this will assert;
     rootwall->Add(southwall);
     rootwall->Add(largest);
-    rootwall->Accept(ant);
+    rootwall->Accept(&ant);
     BOOST_CHECK_EQUAL(2, ant.wallcount);
     BOOST_CHECK_EQUAL(3, ant.brickcount);
 }

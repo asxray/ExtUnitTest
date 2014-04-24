@@ -55,7 +55,7 @@ protected:
     void
     Traverse(
         T&           visited,
-        BaseVisitor& guest
+        BaseVisitor* guest
         )
     {
         AcceptImpl(visited, guest);
@@ -64,7 +64,7 @@ protected:
     }
 };
 #define VISITABLECOMPOSITE() \
-    virtual void Accept(dp::BaseVisitor & guest) \
+    virtual void Accept(dp::BaseVisitor * guest) \
     {return Traverse(*this, guest); }
 } /* namespace eutest */
 

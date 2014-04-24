@@ -20,7 +20,7 @@ public:
     virtual
     ~TestSuite();
     virtual void
-    Accept(dp::BaseVisitor& guest);
+    Accept(dp::BaseVisitor* guest);
 };
 } /* namespace eut */
 

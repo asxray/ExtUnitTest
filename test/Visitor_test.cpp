@@ -39,5 +39,5 @@ BOOST_AUTO_TEST_CASE(visitor)
 {
     House   whiteHouse;
     Cleaner bush;
-    whiteHouse.Accept(bush);
+    whiteHouse.Accept(&bush);
 }

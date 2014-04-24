@@ -7,15 +7,20 @@
 
 #include "TestResult.h"
 #include <boost/test/unit_test.hpp>
+#include <sstream>
 
 BOOST_AUTO_TEST_CASE(testresult)
 {
-    eut::TestResult result;
-    BOOST_CHECK_EQUAL(false, result.isPassed());
-    BOOST_CHECK_EQUAL("FAILED\n", result.ToString());
-    result.setPassed(true);
-    BOOST_CHECK_EQUAL(true, result.isPassed());
-    BOOST_CHECK_EQUAL("PASSED\n", result.ToString());
-    result << std::string("abc") << "what";
-    BOOST_CHECK_EQUAL("PASSED\nabcwhat", result.ToString());
+    std::ostringstream oStr;
+    eut::TestResult    result;
+    BOOST_CHECK_EQUAL(eut::TestResult::WAIVED, result.getRet());
+    oStr << result;
+    BOOST_CHECK_EQUAL("WAIVED\n", oStr.str());
+    result.setRet(eut::TestResult::PASSED);
+    BOOST_CHECK_EQUAL(eut::TestResult::PASSED, result.getRet());
+    result << "nothing";
+    BOOST_CHECK_EQUAL("nothing", result.getErrorlog());
+    oStr.str("");
+    oStr << result;
+    BOOST_CHECK_EQUAL("PASSED\nnothing", oStr.str());
 }
