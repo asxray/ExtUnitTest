@@ -9,8 +9,11 @@ TESTS_ENVIRONMENT = valgrind -q
 
 TESTS =\
 Cloneable_test\
+BaseTestLogger_test\
+BaseTestRunner_test\
 Composite_test\
 Observer_test\
+RootTestSuite_test\
 Singleton_test\
 TestBody_test\
 TestCase_test\
@@ -18,8 +21,6 @@ TestResource_test\
 TestResult_test\
 TestStatus_test\
 TestSuite_test\
-Visitor_test\
-RootTestSuite_test\
-BaseTestRunner_test
+Visitor_test
 
 check_PROGRAMS = $(TESTS)

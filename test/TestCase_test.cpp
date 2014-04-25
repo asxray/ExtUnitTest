@@ -9,13 +9,13 @@
 #include "TestCase.h"
 #include <boost/test/unit_test.hpp>
 #include <ostream>
-#define SHOW() \
-    std::cout << __FILE__ << " : " << __LINE__ << " : " << __FUNCTION__ \
-              << std::endl
 
 class CaseOne
     : public eut::TestCase
 {
+#define SHOW() \
+    std::cout << __FILE__ << " : " << __LINE__ << " : " << __FUNCTION__ \
+              << std::endl
 public:
     CLONE(CaseOne);
     virtual

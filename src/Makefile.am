@@ -4,31 +4,31 @@ lib_LTLIBRARIES = libextunittest.la
 
 libextunittest_la_SOURCES = \
 Composite.cpp\
+BaseTestLogger.cpp\
+BaseTestRunner.cpp\
+RootTestSuite.cpp\
 TestBody.cpp\
 TestCase.cpp\
 TestResource.cpp\
 TestResult.cpp\
 TestStatus.cpp\
-TestSuite.cpp\
-RootTestSuite.cpp\
-BaseTestRunner.cpp
-
+TestSuite.cpp
 
 nobase_include_HEADERS = \
 Cloneable.hpp\
+BaseTestLogger.h\
+BaseTestRunner.h\
 Composite.hpp\
 Observer.hpp\
+RootTestSuite.h\
 Singleton.hpp\
-Visitor.hpp\
+TestBody.h\
+TestCase.h\
 TestResource.h\
 TestResult.h\
 TestStatus.h\
 TestSuite.h\
-TestBody.h\
-TestCase.h\
-RootTestSuite.h\
-BaseTestRunner.h
-
+Visitor.hpp
 
 # flags
 # libextunittest_la_LDFLAGS =
