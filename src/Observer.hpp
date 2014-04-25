@@ -29,7 +29,7 @@ public:
     virtual
     ~Observer() {}
     virtual void
-    Update(const T& subject) = 0;
+    Update(T const* const subject) = 0;
 };
 
 class Subject
@@ -51,7 +51,7 @@ protected:
     // T is an inherited class
     template<class T>
     void
-    NotifyImpl(const T& subj) const
+    NotifyImpl(T const* const subj) const
     {
         for (auto& sp : observers)
             if (auto* p = dynamic_cast<Observer<T>*>(sp.get()))
@@ -60,6 +60,6 @@ protected:
 };
 // add this macor in the inherited subject class.
 #define NOTIFY() \
-    virtual void Notify() const {NotifyImpl(*this); }
+    virtual void Notify() const {NotifyImpl(this); }
 } /* namespace eutest */
 #endif /* OBSERVER_HPP_ */

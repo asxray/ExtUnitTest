@@ -52,16 +52,16 @@ public:
     virtual
     ~Sound() {}
     virtual void
-    Update(const Alarm& subj)
+    Update(Alarm const* const subj)
     {
         std::cout
         << "Singing: It's "
-        << subj.getTime()
+        << subj->getTime()
         << " o'clock."
         << std::endl;
     }
     virtual void
-    Update(const Door& subj)
+    Update(Door const* const subj)
     {
         std::cout
         << "Singing: Door opened."
@@ -77,7 +77,7 @@ public:
     virtual
     ~Light() {}
     virtual void
-    Update(const Alarm& alarm)
+    Update(Alarm const* const alarm)
     {
         std::cout
         << "Light: shining."
