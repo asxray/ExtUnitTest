@@ -26,6 +26,5 @@ void
 TestStatus::setStatus(TestStatus::STATUS status)
 {
     this->status = status;
-    Notify();
 }
 } /* namespace eut */

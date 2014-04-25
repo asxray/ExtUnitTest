@@ -29,9 +29,9 @@ public:
     virtual
     ~Cleaner() {}
     void
-    Visit(House& aHouse)
+    Visit(House* const aHouse)
     {
-        std::cout << aHouse.height << std::endl;
+        BOOST_CHECK_EQUAL(aHouse->height, 3);
     }
 };
 

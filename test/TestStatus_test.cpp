@@ -14,7 +14,6 @@ class MyStatus
 public:
     virtual
     ~MyStatus() {}
-    NOTIFY()
 };
 
 BOOST_AUTO_TEST_CASE(init)

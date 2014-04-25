@@ -17,10 +17,7 @@ class RootTestSuite
     : public dp::Singleton<RootTestSuite>,
       public TestSuite
 {
-public:
-    RootTestSuite();
-    virtual
-    ~RootTestSuite();
+    SINGLETON(RootTestSuite);
 };
 } /* namespace eut */
 

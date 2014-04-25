@@ -19,8 +19,8 @@ TestSuite::~TestSuite()
     // TODO Auto-generated destructor stub
 }
 void
-TestSuite::Accept(dp::BaseVisitor* guest)
+TestSuite::Accept(dp::BaseVisitor* const guest)
 {
-    return(Traverse(*this, guest));
+    return(Traverse(this, guest));
 }
 } /* namespace eut */

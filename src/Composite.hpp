@@ -54,9 +54,9 @@ protected:
     template<class T>
     void
     Traverse(
-        T&           visited,
-        BaseVisitor* guest
-        )
+        T* const           visited,
+        BaseVisitor* const guest
+        ) const
     {
         AcceptImpl(visited, guest);
         for (auto& i : children)
@@ -64,8 +64,8 @@ protected:
     }
 };
 #define VISITABLECOMPOSITE() \
-    virtual void Accept(dp::BaseVisitor * guest) \
-    {return Traverse(*this, guest); }
+    virtual void Accept(dp::BaseVisitor * const guest) \
+    {return Traverse(this, guest); }
 } /* namespace eutest */
 
 #endif /* COMPOSITE_HPP_ */

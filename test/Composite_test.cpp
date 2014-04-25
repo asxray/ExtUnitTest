@@ -59,19 +59,19 @@ public:
     ~Insect() {}
     virtual
     void
-    Visit(brick& aPlace)
+    Visit(brick* const aPlace)
     {
         ++brickcount;
-        BOOST_CHECK_EQUAL(aPlace.n, 1);
-        std::cout << aPlace.getFullname() << std::endl;
+        BOOST_CHECK_EQUAL(aPlace->n, 1);
+        std::cout << aPlace->getFullname() << std::endl;
     }
     virtual
     void
-    Visit(wall& aPlace)
+    Visit(wall* const aPlace)
     {
         ++wallcount;
-        BOOST_CHECK_EQUAL(aPlace.n, 3);
-        std::cout << aPlace.getFullname() << std::endl;
+        BOOST_CHECK_EQUAL(aPlace->n, 3);
+        std::cout << aPlace->getFullname() << std::endl;
     }
     int wallcount;
     int brickcount;

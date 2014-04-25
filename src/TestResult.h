@@ -24,7 +24,6 @@ public:
         ERROR,
         WAIVED
     };
-    static std::map<RET, std::string> ret2Str;
     TestResult();
     virtual
     ~TestResult();
@@ -43,11 +42,22 @@ public:
     void
     setRet(RET);
     const std::string&
-    getErrorlog() const;
+    getLog() const;
+    const std::string&
+    getRetStr() const;
+    const double&
+    getTimer(const std::string&) const;
+    void
+    setTimer(
+        const std::string&,
+        const      double&
+        );
 
 protected:
-    std::string errorlog;
-    RET         ret;
+    static std::map<RET, std::string> ret2Str;
+    std::string                       errorlog;
+    RET                               ret;
+    std::map<std::string, double>      timer;
 };
 } /* namespace eut */
 

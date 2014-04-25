@@ -8,6 +8,7 @@
 #ifndef BASETESTRUNNER_H_
 #define BASETESTRUNNER_H_
 
+#include "Observer.hpp"
 #include "TestCase.h"
 #include "TestSuite.h"
 #include "Visitor.hpp"
@@ -17,16 +18,22 @@ namespace eut
 class BaseTestRunner
     : public dp::BaseVisitor,
       public dp::Visitor<TestCase>,
-      public dp::Visitor<TestSuite>
+      public dp::Visitor<TestSuite>,
+      public dp::Subject
 {
 public:
     BaseTestRunner();
     virtual
     ~BaseTestRunner();
     virtual void
-    Visit(TestCase&);
+    Visit(TestCase* const);
     virtual void
-    Visit(TestSuite&);
+    Visit(TestSuite* const);
+protected:
+    virtual void
+    Notify() const;
+    virtual void
+    VisitImpl(TestCase* const);
 };
 } /* namespace eut */
 

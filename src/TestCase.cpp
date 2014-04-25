@@ -20,6 +20,6 @@ TestCase::~TestCase()
 void
 TestCase::Accept(dp::BaseVisitor* guest)
 {
-    return(AcceptImpl(*this, guest));
+    AcceptImpl(this, guest);
 }
 } /* namespace eut */

@@ -63,8 +63,28 @@ TestResult::setRet(RET result)
 }
 
 const std::string&
-TestResult::getErrorlog() const
+TestResult::getLog() const
 {
     return(errorlog);
+}
+const std::string&
+TestResult::getRetStr() const
+{
+    return(ret2Str.at(this->ret));
+}
+
+const double&
+TestResult::getTimer(const std::string& s) const
+{
+    return(timer.at(s));
+}
+
+void
+TestResult::setTimer(
+    const std::string& s,
+    const double&      n
+    )
+{
+    this->timer[s] = n;
 }
 } /* namespace eut */
