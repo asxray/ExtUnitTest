@@ -57,7 +57,7 @@ protected:
     static std::map<RET, std::string> ret2Str;
     std::string                       errorlog;
     RET                               ret;
-    std::map<std::string, double>      timer;
+    std::map<std::string, double>     timer;
 };
 } /* namespace eut */
 

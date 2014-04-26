@@ -5,19 +5,20 @@
  *      Author: josephx
  */
 
-#include "BaseTestLogger.h"
+#include "BaseTestObserver.h"
 
 namespace eut
 {
-BaseTestLogger::BaseTestLogger()
+BaseTestObserver::BaseTestObserver()
 {}
 
-BaseTestLogger::~BaseTestLogger()
+BaseTestObserver::~BaseTestObserver()
 {}
 
 void
-BaseTestLogger::Update(TestCase const* const aCase)
+BaseTestObserver::Update(TestCase const* const aCase)
 {
+    assert(aCase);
     if (funcMap.count(aCase->getStatus()))
         funcMap.at(aCase->getStatus()) (aCase);
 }

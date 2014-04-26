@@ -5,7 +5,7 @@
  *      Author: josephx
  */
 
-#include "BaseTestLogger.h"
+#include "BaseTestObserver.h"
 #include "TestCase.h"
 #include <boost/test/unit_test.hpp>
 
@@ -38,7 +38,7 @@ public:
     }
 };
 class ConsoleLogger
-    : public BaseTestLogger
+    : public BaseTestObserver
 {
 public:
     ConsoleLogger()

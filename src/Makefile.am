@@ -4,7 +4,7 @@ lib_LTLIBRARIES = libextunittest.la
 
 libextunittest_la_SOURCES = \
 Composite.cpp\
-BaseTestLogger.cpp\
+BaseTestObserver.cpp\
 BaseTestRunner.cpp\
 RootTestSuite.cpp\
 TestBody.cpp\
@@ -16,7 +16,7 @@ TestSuite.cpp
 
 nobase_include_HEADERS = \
 Cloneable.hpp\
-BaseTestLogger.h\
+BaseTestObserver.h\
 BaseTestRunner.h\
 Composite.hpp\
 Observer.hpp\

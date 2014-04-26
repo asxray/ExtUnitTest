@@ -14,13 +14,13 @@
 #include <map>
 namespace eut
 {
-class BaseTestLogger
+class BaseTestObserver
     : public dp::Observer<TestCase>
 {
 public:
-    BaseTestLogger();
+    BaseTestObserver();
     virtual
-    ~BaseTestLogger();
+    ~BaseTestObserver();
     virtual void
     Update(TestCase const* const);
 protected:
