@@ -7,19 +7,13 @@
 
 #include "BaseTestObserver.h"
 
-namespace eut
-{
-BaseTestObserver::BaseTestObserver()
-{}
+namespace eut {
+BaseTestObserver::BaseTestObserver() {}
 
-BaseTestObserver::~BaseTestObserver()
-{}
+BaseTestObserver::~BaseTestObserver() {}
 
-void
-BaseTestObserver::Update(TestCase const* const aCase)
-{
-    assert(aCase);
-    if (funcMap.count(aCase->getStatus()))
-        funcMap.at(aCase->getStatus()) (aCase);
+void BaseTestObserver::Update(TestCase const* const aCase) {
+  assert(aCase);
+  if (funcMap.count(aCase->getStatus())) funcMap.at(aCase->getStatus())(aCase);
 }
 } /* namespace eut */

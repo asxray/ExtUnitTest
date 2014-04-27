@@ -7,19 +7,12 @@
 
 #include "TestCase.h"
 
-namespace eut
-{
-TestCase::TestCase()
-{
-    // TODO Auto-generated constructor stub
+namespace eut {
+TestCase::TestCase() {
+  // TODO Auto-generated constructor stub
 }
-TestCase::~TestCase()
-{
-    // TODO Auto-generated destructor stub
+TestCase::~TestCase() {
+  // TODO Auto-generated destructor stub
 }
-void
-TestCase::Accept(dp::BaseVisitor* guest)
-{
-    AcceptImpl(this, guest);
-}
+void TestCase::Accept(dp::BaseVisitor* guest) { AcceptImpl(this, guest); }
 } /* namespace eut */

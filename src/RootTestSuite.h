@@ -11,13 +11,9 @@
 #include "Singleton.hpp"
 #include "TestSuite.h"
 
-namespace eut
-{
-class RootTestSuite
-    : public dp::Singleton<RootTestSuite>,
-      public TestSuite
-{
-    SINGLETON(RootTestSuite);
+namespace eut {
+class RootTestSuite : public dp::Singleton<RootTestSuite>, public TestSuite {
+  SINGLETON(RootTestSuite);
 };
 } /* namespace eut */
 

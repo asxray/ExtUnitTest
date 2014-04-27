@@ -10,17 +10,12 @@
 
 #include "Composite.hpp"
 
-namespace eut
-{
-class TestSuite
-    : public dp::Composite
-{
-public:
-    TestSuite();
-    virtual
-    ~TestSuite();
-    virtual void
-    Accept(dp::BaseVisitor* guest);
+namespace eut {
+class TestSuite : public dp::Composite {
+ public:
+  TestSuite();
+  virtual ~TestSuite();
+  virtual void Accept(dp::BaseVisitor* guest);
 };
 } /* namespace eut */
 

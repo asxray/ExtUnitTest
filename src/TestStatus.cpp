@@ -7,24 +7,12 @@
 
 #include "TestStatus.h"
 
-namespace eut
-{
-TestStatus::TestStatus()
-    : status(TestStatus::WAITING)
-{}
+namespace eut {
+TestStatus::TestStatus() : status(TestStatus::WAITING) {}
 
-TestStatus::~TestStatus()
-{}
+TestStatus::~TestStatus() {}
 
-TestStatus::STATUS
-TestStatus::getStatus() const
-{
-    return(status);
-}
+TestStatus::STATUS TestStatus::getStatus() const { return (status); }
 
-void
-TestStatus::setStatus(TestStatus::STATUS status)
-{
-    this->status = status;
-}
+void TestStatus::setStatus(TestStatus::STATUS status) { this->status = status; }
 } /* namespace eut */
