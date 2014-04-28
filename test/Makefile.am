@@ -1,17 +1,23 @@
 include $(top_srcdir)/common.am
 
 AM_DEFAULT_SOURCE_EXT = .cpp
-AM_CXXFLAGS += -D BOOST_TEST_DYN_LINK -D BOOST_TEST_MAIN -I$(top_srcdir)/src
-AM_LDFLAGS = -lboost_unit_test_framework \
-	../src/libextunittest.la
+
+AM_CXXFLAGS +=\
+-D BOOST_TEST_DYN_LINK\
+-D BOOST_TEST_MAIN\
+-I$(top_srcdir)/src
+
+AM_LDFLAGS=\
+-lboost_unit_test_framework\
+../src/libextunittest.la
 
 TESTS_ENVIRONMENT = valgrind -q
-
 TESTS =\
-Cloneable_test\
 BaseTestObserver_test\
 BaseTestRunner_test\
+Cloneable_test\
 Composite_test\
+ConsoleTestLogger_test\
 Observer_test\
 RootTestSuite_test\
 Singleton_test\

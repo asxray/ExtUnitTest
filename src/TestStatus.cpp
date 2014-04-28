@@ -23,7 +23,7 @@ TestStatus::TestStatus() : status(TestStatus::WAITING) {
 TestStatus::~TestStatus() {}
 TestStatus::STATUS TestStatus::getStatus() const { return (status); }
 void TestStatus::setStatus(TestStatus::STATUS status) { this->status = status; }
-std::string& TestStatus::Stauts2String(void) const {
+std::string& TestStatus::getStatusStr(void) const {
   return TestStatus::stat2str.at(this->status);
 }
 } /* namespace eut */

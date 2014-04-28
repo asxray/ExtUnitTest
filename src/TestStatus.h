@@ -27,7 +27,7 @@ class TestStatus {
   STATUS
   getStatus() const;
   void setStatus(STATUS status);
-  std::string& Stauts2String(void) const;
+  std::string& getStatusStr(void) const;
 
  private:
   STATUS status;
