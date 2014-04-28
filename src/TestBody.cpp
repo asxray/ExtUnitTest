@@ -7,8 +7,7 @@
 
 #include "TestBody.h"
 
-namespace eut
-{
+namespace eut {
 TestBody::TestBody() {}
 
 TestBody::~TestBody() {}

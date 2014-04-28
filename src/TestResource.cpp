@@ -7,8 +7,7 @@
 
 #include "TestResource.h"
 
-namespace eut
-{
+namespace eut {
 TestResource::TestResource() {}
 
 TestResource::~TestResource() {}

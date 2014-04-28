@@ -14,7 +14,7 @@ TESTS_ENVIRONMENT = valgrind -q
 
 TESTS =\
 Cloneable_test\
-BaseTestLogger_test\
+BaseTestObserver_test\
 BaseTestRunner_test\
 Composite_test\
 Observer_test\

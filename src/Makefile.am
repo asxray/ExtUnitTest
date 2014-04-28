@@ -10,7 +10,7 @@ AM_CXXFLAGS += -I $(top_srcdir)/soci/core
 
 libextunittest_la_SOURCES = \
 Composite.cpp\
-BaseTestLogger.cpp\
+BaseTestObserver.cpp\
 BaseTestRunner.cpp\
 RootTestSuite.cpp\
 TestBody.cpp\
@@ -23,7 +23,7 @@ DatabaseLog.cpp
 
 nobase_include_HEADERS = \
 Cloneable.hpp\
-BaseTestLogger.h\
+BaseTestObserver.h\
 BaseTestRunner.h\
 Composite.hpp\
 Observer.hpp\

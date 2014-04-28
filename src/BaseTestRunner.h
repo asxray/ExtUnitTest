@@ -13,27 +13,20 @@
 #include "TestSuite.h"
 #include "Visitor.hpp"
 
-namespace eut
-{
-class BaseTestRunner
-    : public dp::BaseVisitor,
-      public dp::Visitor<TestCase>,
-      public dp::Visitor<TestSuite>,
-      public dp::Subject
-{
-public:
-    BaseTestRunner();
-    virtual
-    ~BaseTestRunner();
-    virtual void
-    Visit(TestCase* const);
-    virtual void
-    Visit(TestSuite* const);
-protected:
-    virtual void
-    Notify() const;
-    virtual void
-    VisitImpl(TestCase* const);
+namespace eut {
+class BaseTestRunner : public dp::BaseVisitor,
+                       public dp::Visitor<TestCase>,
+                       public dp::Visitor<TestSuite>,
+                       public dp::Subject {
+ public:
+  BaseTestRunner();
+  virtual ~BaseTestRunner();
+  virtual void Visit(TestCase* const);
+  virtual void Visit(TestSuite* const);
+
+ protected:
+  virtual void Notify() const;
+  virtual void VisitImpl(TestCase* const);
 };
 } /* namespace eut */
 

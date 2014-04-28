@@ -7,13 +7,8 @@
 
 #include "RootTestSuite.h"
 
-namespace eut
-{
-RootTestSuite::RootTestSuite()
-{
-    this->setName("Root");
-}
+namespace eut {
+RootTestSuite::RootTestSuite() { this->setName("Root"); }
 
-RootTestSuite::~RootTestSuite()
-{}
+RootTestSuite::~RootTestSuite() {}
 } /* namespace eut */

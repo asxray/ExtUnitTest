@@ -8,18 +8,13 @@
 #ifndef TESTRESOURCE_H_
 #define TESTRESOURCE_H_
 
-namespace eut
-{
-class TestResource
-{
-public:
-    TestResource();
-    virtual
-    ~TestResource();
-    virtual void
-    SetUp()    = 0;
-    virtual void
-    TearDown() = 0;
+namespace eut {
+class TestResource {
+ public:
+  TestResource();
+  virtual ~TestResource();
+  virtual void SetUp() = 0;
+  virtual void TearDown() = 0;
 };
 } /* namespace eut */
 
