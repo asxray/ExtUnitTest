@@ -24,10 +24,10 @@ class CaseOne : public TestCase {
 class ConsoleLogger : public BaseTestObserver {
  public:
   ConsoleLogger() {
-    funcMap[TestStatus::STATUS::START] = [&](TestCase const* const t) {
+    this->Register(TestStatus::STATUS::START, [&](TestCase const* const t) {
       std::cout << "START " << t->getFullname() << std::endl;
       BOOST_CHECK_EQUAL("abc", t->getName());
-    };
+    });
   };
   virtual ~ConsoleLogger() {};
 };

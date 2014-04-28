@@ -18,8 +18,10 @@ class BaseTestObserver : public dp::Observer<TestCase> {
   BaseTestObserver();
   virtual ~BaseTestObserver();
   virtual void Update(TestCase const* const);
+  void Register(const TestStatus::STATUS,
+                const std::function<void(TestCase const* const)>);
 
- protected:
+ private:
   std::map<TestStatus::STATUS, std::function<void(TestCase const* const)> >
       funcMap;
 };
