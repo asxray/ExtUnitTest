@@ -18,5 +18,5 @@ BOOST_AUTO_TEST_CASE(init) {
   BOOST_CHECK_EQUAL(stat.getStatus(), eut::TestStatus::WAITING);
   stat.setStatus(eut::TestStatus::RUNNING);
   BOOST_CHECK_EQUAL(stat.getStatus(), eut::TestStatus::RUNNING);
-  BOOST_CHECK_EQUAL(stat.toString(), "RUNNING");
+  BOOST_CHECK_EQUAL(stat.Stauts2String(), "RUNNING");
 }
