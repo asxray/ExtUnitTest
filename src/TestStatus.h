@@ -8,6 +8,9 @@
 #ifndef TESTSTATUS_H_
 #define TESTSTATUS_H_
 
+#include <string>
+#include <map>
+
 namespace eut {
 class TestStatus {
  public:
@@ -24,9 +27,11 @@ class TestStatus {
   STATUS
   getStatus() const;
   void setStatus(STATUS status);
+  std::string& toString(void) const;
 
- protected:
+ private:
   STATUS status;
+  static std::map<STATUS, std::string> stat2str;
 };
 } /* namespace eut */
 
