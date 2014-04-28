@@ -21,7 +21,8 @@ BOOST_AUTO_TEST_CASE(name) {
   eut::ConsoleTestLogger::Instance().Update(&tc);
   tc.setStatus(eut::TestStatus::STATUS::RUNNING);
   eut::ConsoleTestLogger::Instance().Update(&tc);
-  tc << "nothing";
+  std::string str("nothing");
+  tc.setErrorLog(str);
   tc.setRet(eut::TestResult::RET::ERROR);
   tc.setStatus(eut::TestStatus::STATUS::END);
   eut::ConsoleTestLogger::Instance().Update(&tc);

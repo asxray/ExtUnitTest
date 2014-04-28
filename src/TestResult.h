@@ -9,7 +9,6 @@
 #define TESTRESULT_H_
 
 #include <map>
-#include <ostream>
 #include <string>
 
 namespace eut {
@@ -23,20 +22,22 @@ class TestResult {
   };
   TestResult();
   virtual ~TestResult();
-  friend std::ostream& operator<<(std::ostream&, TestResult&);
-  friend TestResult& operator<<(TestResult&, std::string);
+
   RET getRet() const;
   void setRet(RET);
-  const std::string& getLog() const;
   const std::string& getRetStr() const;
+
   const double& getTimer(const std::string&) const;
   void setTimer(const std::string&, const double&);
 
- protected:
-  static std::map<RET, std::string> ret2Str;
-  std::string errorlog;
+  const std::string& getErrorLog(void) const;
+  void setErrorLog(const std::string& slog);
+
+ private:
   RET ret;
+  static std::map<RET, std::string> ret2Str;
   std::map<std::string, double> timer;
+  std::string ErrorLog;
 };
 } /* namespace eut */
 

@@ -19,24 +19,12 @@ TestResult::TestResult() : ret(RET::WAIVED) {
     ret2Str[TestResult::RET::WAIVED] = "WAIVED";
   }
 }
-
 TestResult::~TestResult() {}
-
-std::ostream& operator<<(std::ostream& ostr, TestResult& res) {
-  ostr << TestResult::ret2Str.at(res.ret) << std::endl << res.errorlog;
-  return (ostr);
-}
-
-TestResult& operator<<(TestResult& r, std::string str) {
-  r.errorlog += str;
-  return (r);
-}
 
 TestResult::RET TestResult::getRet() const { return (ret); }
 
 void TestResult::setRet(RET result) { this->ret = result; }
 
-const std::string& TestResult::getLog() const { return (errorlog); }
 const std::string& TestResult::getRetStr() const {
   return (ret2Str.at(this->ret));
 }
@@ -48,4 +36,7 @@ const double& TestResult::getTimer(const std::string& s) const {
 void TestResult::setTimer(const std::string& s, const double& n) {
   this->timer[s] = n;
 }
+
+const std::string& TestResult::getErrorLog() const { return this->ErrorLog; }
+void TestResult::setErrorLog(const std::string& slog) { this->ErrorLog = slog; }
 } /* namespace eut */
