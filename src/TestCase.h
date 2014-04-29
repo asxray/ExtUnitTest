@@ -23,9 +23,20 @@ class TestCase : public TestBody,
                  public dp::Cloneable,
                  public dp::Component {
  public:
+  enum ATTRIBUTE {
+    DEFAULT = 0b00,
+    MULTITHREAD = 0b01,
+    WAIVED = 0b10
+  };
   TestCase();
   virtual ~TestCase();
   virtual void Accept(dp::BaseVisitor* guest);
+
+  void setAttr(const ATTRIBUTE aAttr);
+  ATTRIBUTE getAttr() const;
+
+ private:
+  ATTRIBUTE mAttr;
 };
 } /* namespace eut */
 

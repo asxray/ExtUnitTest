@@ -8,11 +8,12 @@
 #include "TestCase.h"
 
 namespace eut {
-TestCase::TestCase() {
-  // TODO Auto-generated constructor stub
-}
-TestCase::~TestCase() {
-  // TODO Auto-generated destructor stub
-}
+TestCase::TestCase() : mAttr(TestCase::ATTRIBUTE::DEFAULT) {}
+TestCase::~TestCase() {}
 void TestCase::Accept(dp::BaseVisitor* guest) { AcceptImpl(this, guest); }
+void TestCase::setAttr(const eut::TestCase::ATTRIBUTE aAttr) {
+  this->mAttr = aAttr;
+}
+TestCase::ATTRIBUTE TestCase::getAttr() const { return this->mAttr; }
+
 } /* namespace eut */
