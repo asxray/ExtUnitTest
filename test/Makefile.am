@@ -5,17 +5,17 @@ AM_DEFAULT_SOURCE_EXT = .cpp
 AM_CXXFLAGS +=\
 -D BOOST_TEST_DYN_LINK\
 -D BOOST_TEST_MAIN\
--I$(top_srcdir)/src\
--I $(top_srcdir)/soci/core
+-I $(top_srcdir)/src\
+-I $(top_srcdir)/soci/src/core\
+-I /usr/include/mysql/
 
 AM_LDFLAGS=\
-$(top_srcdir)/soci/lib/libsoci_core.a \
-$(top_srcdir)/soci/lib/libsoci_mysql.a \
+../src/libextunittest.la\
+$(top_srcdir)/soci/src/lib/libsoci_core.a\
+$(top_srcdir)/soci/src/lib/libsoci_mysql.a\
 -lboost_system\
 -lboost_thread\
 -lboost_unit_test_framework\
-../src/libextunittest.la \
-../src/libextunittest.la\
 -ldl\
 -lmysqlclient
 

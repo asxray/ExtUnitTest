@@ -3,12 +3,9 @@ include $(top_srcdir)/common.am
 #libtools target
 lib_LTLIBRARIES = libextunittest.la
 
-AM_LDFLAGS =	$(top_srcdir)/soci/lib/libsoci_core.a \
-$(top_srcdir)/soci/lib/libsoci_mysql.a\
--lboost_thread\
--lboost_system
-
-AM_CXXFLAGS += -I $(top_srcdir)/soci/core
+AM_CXXFLAGS +=\
+-I $(top_srcdir)/soci/src/core\
+-I /usr/include/mysql/
 
 libextunittest_la_SOURCES = \
 BaseTestObserver.cpp\

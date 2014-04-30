@@ -7,42 +7,35 @@
 
 #ifndef DATABASELOG_H_
 #define DATABASELOG_H_
+
+#include "BaseTestObserver.h"
 #include "Singleton.hpp"
 #include "TestCase.h"
-#include <../soci/core/soci.h>
-#include <../soci/backends/mysql/soci-mysql.h>
-#include "BaseTestObserver.h"
-#include <boost/thread/thread.hpp>
-#include <boost/asio/io_service.hpp>
+#include <../soci/src/backends/mysql/soci-mysql.h>
+#include <../soci/src/core/soci.h>
 #include <boost/lockfree/queue.hpp>
+#include <boost/thread/thread.hpp>
+#include <memory>
 
-namespace eut
-{
+namespace eut {
 
+class DatabaseLog : public dp::Singleton<DatabaseLog>, public BaseTestObserver {
+  SINGLETON(DatabaseLog);
+  std::string table;
+  std::shared_ptr<soci::session> mSql;
+  std::shared_ptr<boost::thread> mThread;
+  std::shared_ptr<boost::lockfree::queue<TestCase const*> > CaseQueue;
 
-class DatabaseLog:
-		public dp::Singleton<DatabaseLog>,
-public BaseTestObserver
-{
-	SINGLETON(DatabaseLog);
-	std::string table;
-	soci::session* sql;
-//	boost::thread_group tg;
-//	boost::asio::io_service ioService;
-//	boost::asio::io_service::work* work;
-	boost::thread* thread;
-	boost::lockfree::queue <TestCase const*> *CaseQueue;
-public:
-	void AddToThreadPool(TestCase const*const t);
-	void InsertRecord(TestCase const*const t);
-	void InsertionThread();
-	void ThreadLoop();
-	void ConnectDB(std::string dbname, std::string user, std::string passwd,std::string table);
-private:
-	bool isRunning;
+ public:
+  void AddToThreadPool(TestCase const* const t);
+  void InsertRecord(TestCase const* const t);
+  void InsertionThread();
+  void ThreadLoop();
+  void ConnectDB(std::string dbname, std::string user, std::string passwd,
+                 std::string table);
 
+ private:
+  bool isRunning;
 };
-
-
 }
 #endif /* DATABASELOG_H_ */
