@@ -35,7 +35,7 @@ private:                                            \
   tt(tt&);                                          \
   virtual ~tt();                                    \
   friend BaseType& Singleton<BaseType>::Instance(); \
-  friend void boost::checked_delete<>(tt*);   \
+  friend void boost::checked_delete<>(tt*);         \
   const BaseType& operator=(BaseType&)
 }
 #endif
