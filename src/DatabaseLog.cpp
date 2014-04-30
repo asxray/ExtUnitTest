@@ -14,7 +14,7 @@ namespace eut {
 
 DatabaseLog::DatabaseLog() : isRunning(true) {
   Register(TestStatus::END,
-           [&](TestCase const *const t) { AddToThreadPool(t); });
+           [&](TestCase const *const t) { CaseQueue->push(t); });
   CaseQueue.reset(new boost::lockfree::queue<TestCase const *>(4096));
   mThread.reset(new boost::thread(boost::bind(&DatabaseLog::ThreadLoop, this)));
 };
@@ -40,30 +40,27 @@ void DatabaseLog::ConnectDB(std::string dbname, std::string user,
 }
 
 void DatabaseLog::ThreadLoop() {
-  while (isRunning || !CaseQueue->empty()) {
-    TestCase *tt;
-    CaseQueue->pop(tt);
-    InsertRecord(tt);
+  while (isRunning) {
+    while (!CaseQueue->empty()) {
+      TestCase const *tt;
+      CaseQueue->pop(tt);
+      InsertRecord(tt);
+    }
+    boost::this_thread::sleep_for(boost::chrono::seconds(1));
   }
-}
-
-void DatabaseLog::AddToThreadPool(TestCase const *const t) {
-  CaseQueue->push(t);
 }
 
 void DatabaseLog::InsertRecord(TestCase const *const t) {
   time_t CurrentTime = 0;
   time(&CurrentTime);
-  std::string CurTime = std::string(ctime(&CurrentTime));
+  std::string CurTime(ctime(&CurrentTime));
   boost::trim(CurTime);
-  std::string fullname = t->getFullname();
 
   try {
     (*mSql) << "insert into " << table
             << " (case_name,time,result) values(:c,:t,:r)",
-        soci::use(fullname /*t->getFullname()*/),
-        soci::use(std::string(CurTime)),
-        soci::use(std::string(CurTime) /*t->getRetStr()*/);
+        soci::use(t->getFullname()), soci::use(std::string(CurTime)),
+        soci::use(t->getRetStr());
   }
   catch (soci::mysql_soci_error const &e) {
     throw std::runtime_error(e.what());

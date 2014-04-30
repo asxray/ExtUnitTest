@@ -21,21 +21,17 @@ namespace eut {
 
 class DatabaseLog : public dp::Singleton<DatabaseLog>, public BaseTestObserver {
   SINGLETON(DatabaseLog);
+  bool isRunning;
   std::string table;
   std::shared_ptr<soci::session> mSql;
   std::shared_ptr<boost::thread> mThread;
   std::shared_ptr<boost::lockfree::queue<TestCase const*> > CaseQueue;
 
  public:
-  void AddToThreadPool(TestCase const* const t);
   void InsertRecord(TestCase const* const t);
-  void InsertionThread();
   void ThreadLoop();
   void ConnectDB(std::string dbname, std::string user, std::string passwd,
                  std::string table);
-
- private:
-  bool isRunning;
 };
 }
 #endif /* DATABASELOG_H_ */
