@@ -3,9 +3,14 @@ include $(top_srcdir)/common.am
 AM_DEFAULT_SOURCE_EXT = .cpp
 AM_CXXFLAGS += -D BOOST_TEST_DYN_LINK -D BOOST_TEST_MAIN -I$(top_srcdir)/src
 AM_LDFLAGS = -lboost_unit_test_framework \
+-lboost_thread\
+-lboost_system\
 	../src/libextunittest.la \
-	-lsoci_core \
-	-lsoci_mysql
+	$(top_srcdir)/soci/lib/libsoci_core.a \
+$(top_srcdir)/soci/lib/libsoci_mysql.a \
+-ldl\
+-lmysqlclient
+	
 
 AM_CXXFLAGS += -I $(top_srcdir)/soci/core
 	

@@ -11,7 +11,10 @@
 #include "TestCase.h"
 #include <../soci/core/soci.h>
 #include <../soci/backends/mysql/soci-mysql.h>
-#include "BaseTestLogger.h"
+#include "BaseTestObserver.h"
+#include <boost/thread/thread.hpp>
+#include <boost/asio/io_service.hpp>
+#include <boost/lockfree/queue.hpp>
 
 namespace eut
 {
@@ -19,15 +22,24 @@ namespace eut
 
 class DatabaseLog:
 		public dp::Singleton<DatabaseLog>,
-public BaseTestLogger
+public BaseTestObserver
 {
 	SINGLETON(DatabaseLog);
 	std::string table;
-	soci::session sql;
+	soci::session* sql;
+//	boost::thread_group tg;
+//	boost::asio::io_service ioService;
+//	boost::asio::io_service::work* work;
+	boost::thread* thread;
+	boost::lockfree::queue <TestCase const*> *CaseQueue;
 public:
-	DatabaseLog(std::string& dbname, std::string& user, std::string& passwd,std::string& table);
+	void AddToThreadPool(TestCase const*const t);
 	void InsertRecord(TestCase const*const t);
-
+	void InsertionThread();
+	void ThreadLoop();
+	void ConnectDB(std::string dbname, std::string user, std::string passwd,std::string table);
+private:
+	bool isRunning;
 
 };
 
