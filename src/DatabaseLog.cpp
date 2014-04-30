@@ -52,15 +52,12 @@ void DatabaseLog::ConnectDB(std::string dbname, std::string user, std::string pa
 
 void DatabaseLog::ThreadLoop()
 {
-	while(isRunning)
+	while(isRunning || !CaseQueue->empty())
 	{
-			if(!CaseQueue->empty())
-			{
-				TestCase * tt;
-				CaseQueue->pop(tt);
-				InsertRecord(tt);
-			}
-	};
+		TestCase * tt;
+		CaseQueue->pop(tt);
+		InsertRecord(tt);
+	}
 }
 
 void DatabaseLog::AddToThreadPool(TestCase const*const t)
