@@ -5,8 +5,8 @@
  *      Author: josephx
  */
 
-#include "BaseTestRunner.h"
-#include "TestCase.h"
+#include "../src/BaseTestRunner.h"
+#include "../src/TestCase.h"
 #include <boost/test/unit_test.hpp>
 #include <ostream>
 
@@ -25,5 +25,8 @@ class CaseOne : public eut::TestCase {
 BOOST_AUTO_TEST_CASE(onecase) {
   eut::BaseTestRunner runner;
   CaseOne one;
+  BOOST_CHECK_EQUAL(eut::TestCase::DEFAULT, one.getAttr());
+  one.setAttr(eut::TestCase::MULTITHREAD);
+  BOOST_CHECK_EQUAL(eut::TestCase::MULTITHREAD, one.getAttr());
   one.Accept(&runner);
 }

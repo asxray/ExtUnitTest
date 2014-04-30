@@ -1,27 +1,32 @@
 include $(top_srcdir)/common.am
 
 AM_DEFAULT_SOURCE_EXT = .cpp
-AM_CXXFLAGS += -D BOOST_TEST_DYN_LINK -D BOOST_TEST_MAIN -I$(top_srcdir)/src
-AM_LDFLAGS = -lboost_unit_test_framework \
--lboost_thread\
--lboost_system\
-	../src/libextunittest.la \
-	$(top_srcdir)/soci/lib/libsoci_core.a \
+
+AM_CXXFLAGS +=\
+-D BOOST_TEST_DYN_LINK\
+-D BOOST_TEST_MAIN\
+-I$(top_srcdir)/src\
+-I $(top_srcdir)/soci/core
+
+AM_LDFLAGS=\
+$(top_srcdir)/soci/lib/libsoci_core.a \
 $(top_srcdir)/soci/lib/libsoci_mysql.a \
+-lboost_system\
+-lboost_thread\
+-lboost_unit_test_framework\
+../src/libextunittest.la \
+../src/libextunittest.la\
 -ldl\
 -lmysqlclient
-	
-
-AM_CXXFLAGS += -I $(top_srcdir)/soci/core
-	
 
 TESTS_ENVIRONMENT = valgrind -q
-
 TESTS =\
-Cloneable_test\
 BaseTestObserver_test\
 BaseTestRunner_test\
+Cloneable_test\
 Composite_test\
+ConsoleTestLogger_test\
+DatabaseLog_test\
 Observer_test\
 RootTestSuite_test\
 Singleton_test\
@@ -31,7 +36,6 @@ TestResource_test\
 TestResult_test\
 TestStatus_test\
 TestSuite_test\
-Visitor_test\
-DatabaseLog_test
+Visitor_test
 
 check_PROGRAMS = $(TESTS)

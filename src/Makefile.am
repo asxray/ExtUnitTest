@@ -1,5 +1,6 @@
 include $(top_srcdir)/common.am
-# libtools target
+
+#libtools target
 lib_LTLIBRARIES = libextunittest.la
 
 AM_LDFLAGS =	$(top_srcdir)/soci/lib/libsoci_core.a \
@@ -10,9 +11,10 @@ $(top_srcdir)/soci/lib/libsoci_mysql.a\
 AM_CXXFLAGS += -I $(top_srcdir)/soci/core
 
 libextunittest_la_SOURCES = \
-Composite.cpp\
 BaseTestObserver.cpp\
 BaseTestRunner.cpp\
+Composite.cpp\
+ConsoleTestLogger.cpp\
 RootTestSuite.cpp\
 TestBody.cpp\
 TestCase.cpp\
@@ -22,11 +24,12 @@ TestStatus.cpp\
 TestSuite.cpp\
 DatabaseLog.cpp
 
-nobase_include_HEADERS = \
-Cloneable.hpp\
+nobase_include_HEADERS =\
 BaseTestObserver.h\
 BaseTestRunner.h\
+Cloneable.hpp\
 Composite.hpp\
+ConsoleTestLogger.h\
 Observer.hpp\
 RootTestSuite.h\
 Singleton.hpp\
@@ -39,6 +42,6 @@ TestSuite.h\
 Visitor.hpp\
 DatabaseLog.h
 
-# flags
-# libextunittest_la_LDFLAGS =
-# libextunittest_la_LIBADD =
+#flags
+#libextunittest_la_LDFLAGS =
+#libextunittest_la_LIBADD =
