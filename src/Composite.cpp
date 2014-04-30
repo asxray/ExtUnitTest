@@ -8,7 +8,7 @@
 #include "Composite.hpp"
 
 namespace dp {
-Component::Component() : parent(0) {}
+Component::Component() : parent(nullptr) {}
 
 Component::~Component() {}
 
