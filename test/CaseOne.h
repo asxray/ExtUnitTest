@@ -6,9 +6,7 @@
 #include <iostream>
 
 class CaseOne : public eut::TestCase {
-#define SHOW()                                                        \
-  std::cout << __FILE__ << " : " << __LINE__ << " : " << __FUNCTION__ \
-            << std::endl
+#define SHOW() std::cout << __FUNCTION__ << " " << getName() << std::endl
  public:
   CLONE(CaseOne);
   virtual ~CaseOne() {}

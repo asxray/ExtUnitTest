@@ -14,9 +14,7 @@ class MultiThreadTestRunner : public BaseTestRunner {
 
  private:
   bool isRunning;
-  // typedef boost::lockfree::queue<spTestCase> mContainer;
-  typedef std::list<TestCase *> mContainer;
-  mContainer mTestQ;
+  boost::lockfree::queue<TestCase *> mTestQ;
   boost::thread_group mThG;
 };
 
