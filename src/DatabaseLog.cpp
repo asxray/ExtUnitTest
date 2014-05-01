@@ -6,26 +6,26 @@
  */
 
 #include "DatabaseLog.h"
+
 #include <boost/algorithm/string.hpp>
-#include <boost/bind.hpp>
 #include <time.h>
 
 namespace eut {
-
-DatabaseLog::DatabaseLog() : isRunning(true) {
-  Register(TestStatus::END,
-           [&](TestCase const *const t) { CaseQueue->push(t); });
-  CaseQueue.reset(new boost::lockfree::queue<TestCase const *>(4096));
-  mThread.reset(new boost::thread(boost::bind(&DatabaseLog::ThreadLoop, this)));
+DatabaseLog::DatabaseLog()
+    : isRunning(true), CaseQueue(65536), mThread([&]() { ThreadLoop(); }) {
+  Register(TestStatus::END, [&](TestCase const *const t) {
+    while (!CaseQueue.push(t)) {
+      boost::this_thread::sleep_for(boost::chrono::seconds(1));
+    }
+  });
 };
 DatabaseLog::DatabaseLog(DatabaseLog &t) {};
 DatabaseLog::~DatabaseLog() {
   isRunning = false;
-  mThread->join();
+  mThread.join();
 };
-
-void DatabaseLog::ConnectDB(std::string dbname, std::string user,
-                            std::string passwd, std::string table) {
+void DatabaseLog::ConnectDB(std::string &dbname, std::string &user,
+                            std::string &passwd, std::string &table) {
   this->table = table;
   try {
     mSql.reset(new soci::session(
@@ -35,18 +35,18 @@ void DatabaseLog::ConnectDB(std::string dbname, std::string user,
     throw std::runtime_error(e.what());
   }
   catch (...) {
-    throw std::runtime_error("");
+    throw std::runtime_error("Unknown Exception");
   }
 }
 
 void DatabaseLog::ThreadLoop() {
+  TestCase const *tt;
   while (isRunning) {
-    while (!CaseQueue->empty()) {
-      TestCase const *tt;
-      CaseQueue->pop(tt);
-      InsertRecord(tt);
-    }
     boost::this_thread::sleep_for(boost::chrono::seconds(1));
+    while (CaseQueue.pop(tt)) {
+      InsertRecord(tt);
+      boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
+    }
   }
 }
 

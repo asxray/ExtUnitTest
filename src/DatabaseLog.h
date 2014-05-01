@@ -24,14 +24,14 @@ class DatabaseLog : public dp::Singleton<DatabaseLog>, public BaseTestObserver {
   bool isRunning;
   std::string table;
   std::shared_ptr<soci::session> mSql;
-  std::shared_ptr<boost::thread> mThread;
-  std::shared_ptr<boost::lockfree::queue<TestCase const*> > CaseQueue;
+  boost::lockfree::queue<TestCase const*> CaseQueue;
+  boost::thread mThread;
 
  public:
   void InsertRecord(TestCase const* const t);
   void ThreadLoop();
-  void ConnectDB(std::string dbname, std::string user, std::string passwd,
-                 std::string table);
+  void ConnectDB(std::string& dbname, std::string& user, std::string& passwd,
+                 std::string& table);
 };
 }
 #endif /* DATABASELOG_H_ */

@@ -7,9 +7,11 @@ BOOST_AUTO_TEST_CASE(name) {
   CaseOne ac;
   ac.setName("case2");
   ac.setRet(eut::TestResult::RET::PASSED);
-  eut::DatabaseLog::Instance().ConnectDB(std::string("CUFFT"),
-                                         std::string("root"), std::string("1"),
-                                         std::string("test"));
+  std::string dbname("CUFFT");
+  std::string user("root");
+  std::string passwd("1");
+  std::string table("test");
+  eut::DatabaseLog::Instance().ConnectDB(dbname, user, passwd, table);
   ac.setStatus(eut::TestCase::STATUS::START);
   eut::DatabaseLog::Instance().Update(&ac);
   ac.setStatus(eut::TestCase::STATUS::END);
