@@ -12,14 +12,15 @@ BaseTestObserver.cpp\
 BaseTestRunner.cpp\
 Composite.cpp\
 ConsoleTestLogger.cpp\
+DatabaseLog.cpp\
+MultiThreadTestRunner.cpp\
 RootTestSuite.cpp\
 TestBody.cpp\
 TestCase.cpp\
 TestResource.cpp\
 TestResult.cpp\
 TestStatus.cpp\
-TestSuite.cpp\
-DatabaseLog.cpp
+TestSuite.cpp
 
 nobase_include_HEADERS =\
 BaseTestObserver.h\
@@ -27,6 +28,8 @@ BaseTestRunner.h\
 Cloneable.hpp\
 Composite.hpp\
 ConsoleTestLogger.h\
+DatabaseLog.h\
+MultiThreadTestRunner.h\
 Observer.hpp\
 RootTestSuite.h\
 Singleton.hpp\
@@ -36,8 +39,7 @@ TestResource.h\
 TestResult.h\
 TestStatus.h\
 TestSuite.h\
-Visitor.hpp\
-DatabaseLog.h
+Visitor.hpp
 
 #flags
 #libextunittest_la_LDFLAGS =

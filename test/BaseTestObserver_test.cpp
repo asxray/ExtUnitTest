@@ -8,19 +8,9 @@
 #include "BaseTestObserver.h"
 #include "TestCase.h"
 #include <boost/test/unit_test.hpp>
+#include "CaseOne.h"
 
 namespace eut {
-class CaseOne : public TestCase {
-#define SHOW()                                                        \
-  std::cout << __FILE__ << " : " << __LINE__ << " : " << __FUNCTION__ \
-            << std::endl
- public:
-  CLONE(CaseOne);
-  virtual ~CaseOne() {}
-  virtual void SetUp() { SHOW(); }
-  virtual void TearDown() { SHOW(); }
-  virtual void Run() { SHOW(); }
-};
 class ConsoleLogger : public BaseTestObserver {
  public:
   ConsoleLogger() {
@@ -34,7 +24,7 @@ class ConsoleLogger : public BaseTestObserver {
 } /* namespace eut */
 
 BOOST_AUTO_TEST_CASE(name) {
-  eut::CaseOne ac;
+  CaseOne ac;
   ac.setName("abc");
   eut::ConsoleLogger logger;
   logger.Update(&ac);

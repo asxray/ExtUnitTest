@@ -18,7 +18,10 @@ void Component::setName(const std::string& name) { this->name = name; }
 
 Component const* const Component::getParent() const { return (parent); }
 
-void Component::setParent(const Component& parent) { this->parent = &parent; }
+void Component::setParent(Component const* const parent) {
+  assert(parent);
+  this->parent = parent;
+}
 
 const std::string Component::getFullname() const {
   if (parent)
@@ -31,12 +34,8 @@ Composite::~Composite() {}
 
 void Composite::Add(spComponent child) {
   assert(child.get() != this);
-  child->setParent(*this);
-#pragma omp critical
+  child->setParent(this);
   children.push_back(child);
 }
-void Composite::Clear(void) {
-#pragma omp critical
-  children.clear();
-}
+void Composite::Clear(void) { children.clear(); }
 }  // namespace

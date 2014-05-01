@@ -25,12 +25,12 @@ class TestCase : public TestBody,
  public:
   enum ATTRIBUTE {
     DEFAULT = 0b00,
-    MULTITHREAD = 0b01,
+    SINGLETHREAD = 0b01,
     WAIVED = 0b10
   };
   TestCase();
   virtual ~TestCase();
-  virtual void Accept(dp::BaseVisitor* guest);
+  virtual void Accept(dp::BaseVisitor *const guest);
 
   void setAttr(const ATTRIBUTE aAttr);
   ATTRIBUTE getAttr() const;

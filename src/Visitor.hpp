@@ -22,14 +22,14 @@ template <class T, typename R = void, bool ConstVisitor = false>
 class Visitor;
 
 template <class T, typename R>
-class Visitor<T, R, false> {
+class Visitor<T, R, false> : public virtual BaseVisitor {
  public:
   virtual ~Visitor() {}
   virtual R Visit(T* const) = 0;
 };
 
 template <class T, typename R>
-class Visitor<T, R, true> {
+class Visitor<T, R, true> : public virtual BaseVisitor {
  public:
   virtual ~Visitor() {}
   virtual R Visit(T const* const) = 0;

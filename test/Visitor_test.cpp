@@ -17,7 +17,7 @@ class House : public ::dp::BaseVisitable<> {
   const int height;
 };
 
-class Cleaner : public ::dp::BaseVisitor, public ::dp::Visitor<House> {
+class Cleaner : public ::dp::Visitor<House> {
  public:
   virtual ~Cleaner() {}
   void Visit(House* const aHouse) { BOOST_CHECK_EQUAL(aHouse->height, 3); }

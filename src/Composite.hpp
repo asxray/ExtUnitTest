@@ -26,7 +26,7 @@ class Component : public BaseVisitable<> {
   const std::string& getName() const;
   void setName(const std::string& name);
   Component const* const getParent() const;
-  void setParent(const Component& parent);
+  void setParent(Component const* const parent);
   const std::string getFullname() const;
 };
 

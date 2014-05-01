@@ -33,9 +33,7 @@ class wall : public dp::Composite {
   int n;
 };
 
-class Insect : public dp::BaseVisitor,
-               public dp::Visitor<brick>,
-               public dp::Visitor<wall> {
+class Insect : public dp::Visitor<brick>, public dp::Visitor<wall> {
  public:
   Insect() : wallcount(0), brickcount(0) {}
   virtual ~Insect() {}

@@ -14,8 +14,7 @@
 #include "Visitor.hpp"
 
 namespace eut {
-class BaseTestRunner : public dp::BaseVisitor,
-                       public dp::Visitor<TestCase>,
+class BaseTestRunner : public dp::Visitor<TestCase>,
                        public dp::Visitor<TestSuite>,
                        public dp::Subject {
  public:

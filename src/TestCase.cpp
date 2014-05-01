@@ -10,7 +10,7 @@
 namespace eut {
 TestCase::TestCase() : mAttr(TestCase::ATTRIBUTE::DEFAULT) {}
 TestCase::~TestCase() {}
-void TestCase::Accept(dp::BaseVisitor* guest) { AcceptImpl(this, guest); }
+void TestCase::Accept(dp::BaseVisitor* const guest) { AcceptImpl(this, guest); }
 void TestCase::setAttr(const eut::TestCase::ATTRIBUTE aAttr) {
   this->mAttr = aAttr;
 }

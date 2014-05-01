@@ -5,28 +5,18 @@
  *      Author: josephx
  */
 
-#include "../src/BaseTestRunner.h"
 #include "../src/TestCase.h"
+
+#include "../src/BaseTestRunner.h"
+#include "CaseOne.h"
 #include <boost/test/unit_test.hpp>
 #include <ostream>
-
-class CaseOne : public eut::TestCase {
-#define SHOW()                                                        \
-  std::cout << __FILE__ << " : " << __LINE__ << " : " << __FUNCTION__ \
-            << std::endl
- public:
-  CLONE(CaseOne);
-  virtual ~CaseOne() {}
-  virtual void SetUp() { SHOW(); }
-  virtual void TearDown() { SHOW(); }
-  virtual void Run() { SHOW(); }
-};
 
 BOOST_AUTO_TEST_CASE(onecase) {
   eut::BaseTestRunner runner;
   CaseOne one;
   BOOST_CHECK_EQUAL(eut::TestCase::DEFAULT, one.getAttr());
-  one.setAttr(eut::TestCase::MULTITHREAD);
-  BOOST_CHECK_EQUAL(eut::TestCase::MULTITHREAD, one.getAttr());
+  one.setAttr(eut::TestCase::WAIVED);
+  BOOST_CHECK_EQUAL(eut::TestCase::WAIVED, one.getAttr());
   one.Accept(&runner);
 }
