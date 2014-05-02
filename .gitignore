@@ -23,3 +23,5 @@
 /src/Makefile.in
 /test-driver
 /test/Makefile.in
+/html/
+/latex/

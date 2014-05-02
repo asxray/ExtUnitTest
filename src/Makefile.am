@@ -13,6 +13,7 @@ BaseTestRunner.cpp\
 Composite.cpp\
 ConsoleTestLogger.cpp\
 DatabaseLog.cpp\
+ListTestRunner.cpp\
 MultiThreadTestRunner.cpp\
 RootTestSuite.cpp\
 TestBody.cpp\
@@ -29,6 +30,7 @@ Cloneable.hpp\
 Composite.hpp\
 ConsoleTestLogger.h\
 DatabaseLog.h\
+ListTestRunner.h\
 MultiThreadTestRunner.h\
 Observer.hpp\
 RootTestSuite.h\
