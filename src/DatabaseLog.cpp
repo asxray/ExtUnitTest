@@ -24,12 +24,13 @@ DatabaseLog::~DatabaseLog() {
   isRunning = false;
   mThread.join();
 };
-void DatabaseLog::ConnectDB(std::string &dbname, std::string &user,
+void DatabaseLog::ConnectDB(std::string& host, std::string& port,
+							std::string &dbname, std::string &user,
                             std::string &passwd, std::string &table) {
   this->table = table;
   try {
     mSql.reset(new soci::session(
-        soci::mysql, "db=" + dbname + " user=" + user + " password=" + passwd));
+        soci::mysql,"host=" + host + " port="+port+ " db=" + dbname + " user=" + user + " password=" + passwd));
   }
   catch (soci::mysql_soci_error const &e) {
     throw std::runtime_error(e.what());

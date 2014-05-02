@@ -30,7 +30,7 @@ class DatabaseLog : public dp::Singleton<DatabaseLog>, public BaseTestObserver {
  public:
   void InsertRecord(TestCase const* const t);
   void ThreadLoop();
-  void ConnectDB(std::string& dbname, std::string& user, std::string& passwd,
+  void ConnectDB(std::string& host, std::string& port, std::string& dbname, std::string& user, std::string& passwd,
                  std::string& table);
 };
 }
