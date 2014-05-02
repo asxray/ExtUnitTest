@@ -11,63 +11,29 @@
 #include <time.h>
 
 namespace eut {
-DatabaseLog::DatabaseLog()
-    : isRunning(true), CaseQueue(65536), mThread([&]() { ThreadLoop(); }) {
-  Register(TestStatus::END, [&](TestCase const *const t) {
-    while (!CaseQueue.push(t)) {
-      boost::this_thread::sleep_for(boost::chrono::seconds(1));
-    }
-  });
-};
-DatabaseLog::DatabaseLog(DatabaseLog &t) {};
-DatabaseLog::~DatabaseLog() {
-  isRunning = false;
-  mThread.join();
-};
-void DatabaseLog::ConnectDB(std::string& host, std::string& port,
-							std::string &dbname, std::string &user,
-                            std::string &passwd, std::string &table) {
-  this->table = table;
-  try {
-    mSql.reset(new soci::session(
-        soci::mysql,"host=" + host + " port="+port+ " db=" + dbname + " user=" + user + " password=" + passwd));
-  }
-  catch (soci::mysql_soci_error const &e) {
-    throw std::runtime_error(e.what());
-  }
-  catch (...) {
-    throw std::runtime_error("Unknown Exception");
-  }
-}
-
-void DatabaseLog::ThreadLoop() {
-  TestCase const *tt;
-  while (isRunning) {
-    boost::this_thread::sleep_for(boost::chrono::seconds(1));
-    while (CaseQueue.pop(tt)) {
-      InsertRecord(tt);
-      boost::this_thread::sleep_for(boost::chrono::milliseconds(1));
-    }
-  }
-}
-
-void DatabaseLog::InsertRecord(TestCase const *const t) {
+DatabaseLog::DatabaseLog() {
   time_t CurrentTime = 0;
   time(&CurrentTime);
-  std::string CurTime(ctime(&CurrentTime));
+  CurTime = ctime(&CurrentTime);
   boost::trim(CurTime);
+  Register(TestStatus::END, [&](TestCase const* const t) {
+    mSqlScript << "INSERT INTO " << table
+               << " (Casename,Time,Result,Duration1,Duration2,Log) VALUES "
+               << "(\"" << t->getFullname() << "\",\"" << CurTime << "\",\""
+               << t->getRetStr() << "\",\""
+               << "d1\",\"d2\",\"" << t->getErrorLog() << "\");" << std::endl;
+  });
+};
 
-  try {
-    (*mSql) << "insert into " << table
-            << " (case_name,time,result) values(:c,:t,:r)",
-        soci::use(t->getFullname()), soci::use(std::string(CurTime)),
-        soci::use(t->getRetStr());
-  }
-  catch (soci::mysql_soci_error const &e) {
-    throw std::runtime_error(e.what());
-  }
-  catch (...) {
-    throw std::runtime_error("");
-  }
+DatabaseLog::DatabaseLog(DatabaseLog& t) {};
+DatabaseLog::~DatabaseLog() {
+  mSqlScript.close();
+};
+
+void DatabaseLog::init(std::string& filepath, std::string& dbname,
+                       std::string& table) {
+  mSqlScript.open(filepath);
+  this->table = table;
+  mSqlScript << "USE " << dbname << std::endl;
 }
 };

@@ -7,13 +7,10 @@ BOOST_AUTO_TEST_CASE(name) {
   CaseOne ac;
   ac.setName("case2");
   ac.setRet(eut::TestResult::RET::PASSED);
-  std::string host("10.19.192.51");
-  std::string port("3306");
-  std::string dbname("CUFFT");
-  std::string user("root");
-  std::string passwd("1");
+  std::string path("/home/ada/database2.sql");
+  std::string dbname("Curand");
   std::string table("test");
-  eut::DatabaseLog::Instance().ConnectDB(host,port,dbname, user, passwd, table);
+  eut::DatabaseLog::Instance().init(path, dbname, table);
   ac.setStatus(eut::TestCase::STATUS::START);
   eut::DatabaseLog::Instance().Update(&ac);
   ac.setStatus(eut::TestCase::STATUS::END);

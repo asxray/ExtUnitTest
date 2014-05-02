@@ -6,18 +6,13 @@ AM_CXXFLAGS +=\
 -D BOOST_TEST_DYN_LINK\
 -D BOOST_TEST_MAIN\
 -I $(top_srcdir)/src\
--I $(top_srcdir)/soci/src/core\
--I /usr/include/mysql/
 
 AM_LDFLAGS=\
 ../src/libextunittest.la\
-$(top_srcdir)/soci/src/lib/libsoci_core.a\
-$(top_srcdir)/soci/src/lib/libsoci_mysql.a\
 -lboost_system\
 -lboost_thread\
 -lboost_unit_test_framework\
--ldl\
--lmysqlclient
+-ldl
 
 TESTS_ENVIRONMENT = valgrind -q
 TESTS =\

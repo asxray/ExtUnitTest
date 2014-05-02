@@ -3,9 +3,6 @@ include $(top_srcdir)/common.am
 #libtools target
 lib_LTLIBRARIES = libextunittest.la
 
-AM_CXXFLAGS +=\
--I $(top_srcdir)/soci/src/core\
--I /usr/include/mysql/
 
 libextunittest_la_SOURCES = \
 BaseTestObserver.cpp\
