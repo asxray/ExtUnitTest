@@ -7,7 +7,7 @@ BOOST_AUTO_TEST_CASE(name) {
   CaseOne ac;
   ac.setName("case2");
   ac.setRet(eut::TestResult::RET::PASSED);
-  std::string host("localhost");
+  std::string host("10.19.192.51");
   std::string port("3306");
   std::string dbname("CUFFT");
   std::string user("root");
