@@ -5,7 +5,7 @@ AM_DEFAULT_SOURCE_EXT = .cpp
 AM_CXXFLAGS +=\
 -D BOOST_TEST_DYN_LINK\
 -D BOOST_TEST_MAIN\
--I $(top_srcdir)/src\
+-I $(top_srcdir)/src
 
 AM_LDFLAGS=\
 ../src/libextunittest.la\
