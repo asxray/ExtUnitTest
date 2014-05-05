@@ -4,7 +4,7 @@
 
 namespace eut {
 MultiThreadTestRunner::MultiThreadTestRunner(int nThreads)
-    : isRunning(true), mTestQ(8192) {
+    : isRunning(true), mTestQ(1024) {
   for (int i = 0; i < nThreads; ++i)
     mThG.create_thread([&](void) {
       TestCase* tc;

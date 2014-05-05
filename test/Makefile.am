@@ -11,10 +11,10 @@ AM_LDFLAGS=\
 ../src/libextunittest.la\
 -lboost_system\
 -lboost_thread\
--lboost_unit_test_framework\
--ldl
+-lboost_unit_test_framework
 
 TESTS_ENVIRONMENT = valgrind -q
+
 TESTS =\
 BaseTestObserver_test\
 BaseTestRunner_test\

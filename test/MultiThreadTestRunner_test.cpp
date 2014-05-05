@@ -1,7 +1,7 @@
 #include <boost/test/unit_test.hpp>
 
-#include "../src/MultiThreadTestRunner.h"
-#include "../src/TestSuite.h"
+#include "MultiThreadTestRunner.h"
+#include "TestSuite.h"
 #include "CaseOne.h"
 #include <string>
 
