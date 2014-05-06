@@ -14,5 +14,5 @@ testSingleton::~testSingleton() {}
 
 BOOST_AUTO_TEST_CASE(singleton) {
   // testSingleton ats; // can't compile
-  BOOST_CHECK_EQUAL("hello", testSingleton::Instance().say());
+  BOOST_CHECK_EQUAL("hello", testSingleton::Instance()->say());
 }

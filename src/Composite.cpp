@@ -16,7 +16,7 @@ const std::string& Component::getName() const { return (name); }
 
 void Component::setName(const std::string& name) { this->name = name; }
 
-Component const* const Component::getParent() const { return (parent); }
+Component const* Component::getParent() const { return (parent); }
 
 void Component::setParent(Component const* const parent) {
   assert(parent);

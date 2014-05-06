@@ -1,10 +1,12 @@
-#!/bin/bash -x
-PDIR=$(pwd)
+#!/bin/bash -ux
+SRCDIR=$(pwd)
+BDIR="/tmp/eut"
 autoconf
 set -e
 autoreconf -is
-mkdir -p /tmp/ext/built
-mkdir -p /tmp/ext/inst
-cd /tmp/ext/built
-$PDIR/configure CXXFLAGS='-O0 -ggdb' --enable-shared --srcdir=$PDIR  --prefix=/tmp/ext/inst
+rm -rf $BDIR
+mkdir -p $BDIR/built
+mkdir -p $BDIR/inst
+cd $BDIR/built
+$SRCDIR/configure CXXFLAGS='-O0 -ggdb' --enable-shared --srcdir=$SRCDIR --prefix=$BDIR/inst
 make -j check

@@ -27,21 +27,19 @@ class Observer : virtual public BaseObserver {
 
 class Subject {
  private:
-  std::list<std::shared_ptr<BaseObserver> > observers;
+  std::list<BaseObserver*> observers;
 
  public:
   virtual ~Subject() {}
-  virtual void Attach(std::shared_ptr<BaseObserver> obs) {
-    observers.push_back(obs);
-  }
+  virtual void Attach(BaseObserver* obs) { observers.push_back(obs); }
 
  protected:
   virtual void Notify() const = 0;
   // T is an inherited class
   template <class T>
   void NotifyImpl(T const* const subj) const {
-    for (auto& sp : observers)
-      if (auto* p = dynamic_cast<Observer<T>*>(sp.get())) p->Update(subj);
+    for (auto& obs : observers)
+      if (auto* po = dynamic_cast<Observer<T>*>(obs)) po->Update(subj);
   }
 };
 // add this macor in the inherited subject class.

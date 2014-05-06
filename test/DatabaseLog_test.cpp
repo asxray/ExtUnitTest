@@ -10,9 +10,9 @@ BOOST_AUTO_TEST_CASE(name) {
   std::string path("/home/ada/database2.sql");
   std::string dbname("Curand");
   std::string table("test");
-  eut::DatabaseLog::Instance().init(path, dbname, table);
+  eut::DatabaseLog::Instance()->init(path, dbname, table);
   ac.setStatus(eut::TestCase::STATUS::START);
-  eut::DatabaseLog::Instance().Update(&ac);
+  eut::DatabaseLog::Instance()->Update(&ac);
   ac.setStatus(eut::TestCase::STATUS::END);
-  eut::DatabaseLog::Instance().Update(&ac);
+  eut::DatabaseLog::Instance()->Update(&ac);
 }

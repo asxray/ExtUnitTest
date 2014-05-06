@@ -49,9 +49,9 @@ BOOST_AUTO_TEST_CASE(observer) {
   Door Gate;
   std::shared_ptr<Sound> sound(new Sound);
   std::shared_ptr<Light> light(new Light);
-  bigAlarm->Attach(sound);
-  bigAlarm->Attach(light);
-  Gate.Attach(sound);
+  bigAlarm->Attach(sound.get());
+  bigAlarm->Attach(light.get());
+  Gate.Attach(sound.get());
   bigAlarm->ON();
   Gate.Open();
 }

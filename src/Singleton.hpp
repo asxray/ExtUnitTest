@@ -6,12 +6,12 @@ namespace dp {
 template <typename T>
 class Singleton {
  public:
-  static T& Instance() {
+  static T* Instance() {
     if (0 == mInstance.get()) {
 #pragma omp critical
       if (0 == mInstance.get()) mInstance.reset(new T);
     }
-    return (*mInstance);
+    return (mInstance.get());
   }
 
  protected:
@@ -29,13 +29,12 @@ template <typename T>
 boost::shared_ptr<T> Singleton<T>::mInstance;
 
 #define SINGLETON(tt)                               \
-  \
-private:                                            \
+ private:                                           \
   tt();                                             \
   tt(tt&);                                          \
   virtual ~tt();                                    \
-  friend BaseType& Singleton<BaseType>::Instance(); \
-  friend void boost::checked_delete<>(tt*);         \
+  friend BaseType* Singleton<BaseType>::Instance(); \
+  friend void boost::checked_delete<>(BaseType*);   \
   const BaseType& operator=(BaseType&)
 }
 #endif

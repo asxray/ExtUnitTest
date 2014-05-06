@@ -9,6 +9,7 @@ AM_CXXFLAGS +=\
 
 AM_LDFLAGS=\
 ../src/libextunittest.la\
+-lboost_program_options\
 -lboost_system\
 -lboost_thread\
 -lboost_unit_test_framework
@@ -16,6 +17,7 @@ AM_LDFLAGS=\
 TESTS_ENVIRONMENT = valgrind -q
 
 TESTS =\
+App_test\
 BaseTestObserver_test\
 BaseTestRunner_test\
 Cloneable_test\
