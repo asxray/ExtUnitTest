@@ -1,12 +1,5 @@
-/*
- * DatabaseLog.h
- *
- *  Created on: Apr 24, 2014
- *      Author: ada
- */
-
-#ifndef DATABASELOG_H_
-#define DATABASELOG_H_
+#ifndef SQLTESTLOGGER_H
+#define SQLTESTLOGGER_H
 
 #include "BaseTestObserver.h"
 #include "Singleton.hpp"
@@ -16,8 +9,9 @@
 
 namespace eut {
 
-class DatabaseLog : public dp::Singleton<DatabaseLog>, public BaseTestObserver {
-  SINGLETON(DatabaseLog);
+class SqlTestLogger : public dp::Singleton<SqlTestLogger>,
+                      public BaseTestObserver {
+  SINGLETON(SqlTestLogger);
   std::string table;
   std::ofstream mSqlScript;
   std::string CurTime;

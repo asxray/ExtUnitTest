@@ -1,17 +1,10 @@
-/*
- * DatabaseLog.cpp
- *
- *  Created on: Apr 24, 2014
- *      Author: ada
- */
-
-#include "DatabaseLog.h"
+#include "SqlTestLogger.h"
 
 #include <boost/algorithm/string.hpp>
 #include <time.h>
 
 namespace eut {
-DatabaseLog::DatabaseLog() {
+SqlTestLogger::SqlTestLogger() {
   time_t CurrentTime = 0;
   time(&CurrentTime);
   CurTime = ctime(&CurrentTime);
@@ -25,13 +18,13 @@ DatabaseLog::DatabaseLog() {
   });
 };
 
-DatabaseLog::DatabaseLog(DatabaseLog& t) {};
-DatabaseLog::~DatabaseLog() {
+SqlTestLogger::SqlTestLogger(SqlTestLogger& t) {};
+SqlTestLogger::~SqlTestLogger() {
   mSqlScript.close();
 };
 
-void DatabaseLog::init(std::string& filepath, std::string& dbname,
-                       std::string& table) {
+void SqlTestLogger::init(std::string& filepath, std::string& dbname,
+                         std::string& table) {
   mSqlScript.open(filepath);
   this->table = table;
   mSqlScript << "USE " << dbname << std::endl;

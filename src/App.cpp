@@ -10,7 +10,7 @@
 #include "RootTestSuite.h"
 //
 #include "ConsoleTestLogger.h"
-#include "DatabaseLog.h"
+#include "SqlTestLogger.h"
 
 namespace eut {
 App::App(const int argc, char const* const* const argv)
@@ -59,11 +59,11 @@ void App::Run() {
   } else if (this->vmap.at("job").as<int>() > 1) {
     runner.reset(new MultiThreadTestRunner(this->vmap.at("job").as<int>()));
     runner->Attach(ConsoleTestLogger::Instance());
-    runner->Attach(DatabaseLog::Instance());
+    runner->Attach(SqlTestLogger::Instance());
   } else {
     runner.reset(new BaseTestRunner);
     runner->Attach(ConsoleTestLogger::Instance());
-    runner->Attach(DatabaseLog::Instance());
+    runner->Attach(SqlTestLogger::Instance());
   }
   RootTestSuite::Instance()->Accept(runner.get());
 };

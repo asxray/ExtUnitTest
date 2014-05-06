@@ -10,10 +10,10 @@ BaseTestObserver.cpp\
 BaseTestRunner.cpp\
 Composite.cpp\
 ConsoleTestLogger.cpp\
-DatabaseLog.cpp\
 ListTestRunner.cpp\
 MultiThreadTestRunner.cpp\
 RootTestSuite.cpp\
+SqlTestLogger.cpp\
 TestBody.cpp\
 TestCase.cpp\
 TestResource.cpp\
@@ -28,12 +28,12 @@ BaseTestRunner.h\
 Cloneable.hpp\
 Composite.hpp\
 ConsoleTestLogger.h\
-DatabaseLog.h\
 ListTestRunner.h\
 MultiThreadTestRunner.h\
 Observer.hpp\
 RootTestSuite.h\
 Singleton.hpp\
+SqlTestLogger.h\
 TestBody.h\
 TestCase.h\
 TestResource.h\

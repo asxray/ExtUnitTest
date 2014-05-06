@@ -23,12 +23,12 @@ BaseTestRunner_test\
 Cloneable_test\
 Composite_test\
 ConsoleTestLogger_test\
-DatabaseLog_test\
 ListTestRunner_test\
 MultiThreadTestRunner_test\
 Observer_test\
 RootTestSuite_test\
 Singleton_test\
+SqlTestLogger_test\
 TestBody_test\
 TestCase_test\
 TestResource_test\
