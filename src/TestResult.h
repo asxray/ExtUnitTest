@@ -15,10 +15,10 @@ namespace eut {
 class TestResult {
  public:
   enum RET {
-    PASSED,
-    FAILED,
-    ERROR,
-    WAIVED
+    PASSED = 1,
+    FAILED = 0,
+    ERROR = -1,
+    WAIVED = -2
   };
   TestResult();
   virtual ~TestResult();
