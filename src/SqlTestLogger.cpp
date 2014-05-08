@@ -13,8 +13,9 @@ SqlTestLogger::SqlTestLogger() {
     mSqlScript << "INSERT INTO " << table
                << " (Casename,Time,Result,Duration1,Duration2,Log) VALUES "
                << "(\"" << t->getFullname() << "\",\"" << CurTime << "\",\""
-               << t->getRetStr() << "\",\""
-               << "d1\",\"d2\",\"" << t->getErrorLog() << "\");" << std::endl;
+               << t->getRetStr() << "\",\"" << t->getTimer(0) << "\",\""
+               << t->getTimer(1) << "\",\"" << t->getErrorLog() << "\");"
+               << std::endl;
   });
 };
 

@@ -8,6 +8,7 @@
 #ifndef TESTRESULT_H_
 #define TESTRESULT_H_
 
+#include <array>
 #include <map>
 #include <string>
 
@@ -27,8 +28,8 @@ class TestResult {
   void setRet(RET);
   const std::string& getRetStr() const;
 
-  const double& getTimer(const std::string&) const;
-  void setTimer(const std::string&, const double&);
+  double getTimer(const int) const;
+  void setTimer(const int, const double);
 
   const std::string& getErrorLog(void) const;
   void setErrorLog(const std::string& slog);
@@ -36,7 +37,7 @@ class TestResult {
  private:
   RET ret;
   static std::map<RET, std::string> ret2Str;
-  std::map<std::string, double> timer;
+  std::array<double, 3> timer;
   std::string ErrorLog;
 };
 } /* namespace eut */
