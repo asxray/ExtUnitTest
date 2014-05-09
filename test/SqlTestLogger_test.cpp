@@ -8,8 +8,8 @@ BOOST_AUTO_TEST_CASE(name) {
   ac.setName("case2");
   ac.setRet(eut::TestResult::RET::PASSED);
   std::string path("testlog.sql");
-  std::string dbname("Curand");
-  std::string table("test");
+  std::string dbname("Library");
+  std::string table("cuFFT");
   eut::SqlTestLogger::Instance()->init(path, dbname, table);
   ac.setStatus(eut::TestCase::STATUS::START);
   eut::SqlTestLogger::Instance()->Update(&ac);
