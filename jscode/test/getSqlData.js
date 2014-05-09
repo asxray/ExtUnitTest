@@ -6,17 +6,18 @@ var app = express();
 app.use(express.static('public'));
 
 function getSQL(databasename,tablename,callback){
+console.log("getSQL");
     var client = aSql.createConnection({
-	host: "10.19.192.51",
+	host: "127.0.0.1",
 	user: "root",
 	password: "1",
     });
-    client.query("USE " + databasename);
-    var query="SELECT Casename,Time,Duration1 FROM "+tablename +" AS t1 WHERE t1.Time in (SELECT  Time from (SELECT DISTINCT Time from "+ tablename +" ORDER BY Time DESC LIMIT 0,5) as t2) ORDER BY Casename,Time";
+    var query="SELECT Casename,Time,Duration1,DriverVersion,CL FROM "+tablename +" AS t1 WHERE t1.Time in (SELECT  Time from (SELECT DISTINCT Time FROM "+ tablename +" ORDER BY Time DESC LIMIT 0,10) as t2) ORDER BY Casename,Time;";
   console.log(query);
+ client.query("USE "+databasename);
  client.query(query, function (err, result){
+console.log("error:"+err);
 callback(err,result);	
-
 });
     
        
@@ -27,10 +28,12 @@ callback(err,result);
 }
 
 app.get('/',function(req,res){
+console.log("request /");
 res.redirect(index.html);
 });
 
 app.get('/data',function(req,res){
+console.log("request /data");
     if(0 == req.param('database').length || 0 == req.param('table').length){
 	console.log("empty database or table");
 	return;
@@ -44,8 +47,8 @@ app.get('/data',function(req,res){
 	else{
 	    res.send(200,JSON.stringify(result));
 	};
+	res.end();
 	console.log("sent.");
-	console.log(JSON.stringify(result));
     };
     getSQL(req.param('database'),req.param('table'),writeResp);
 

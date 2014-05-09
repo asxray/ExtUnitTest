@@ -12,7 +12,7 @@ body {
   display:none;
    z-index:0;
     opacity:1;
-background-color: white;
+background-color: rgba(240,240,240,1);
 }
 a {
   color: #00B7FF;

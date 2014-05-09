@@ -6,8 +6,8 @@ xmlhttp.onreadystatechange=function(){
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
 {
 document.getElementById("myDiv").innerHTML="";
- var record= JSON.parse(xmlhttp.responseText);
-//var jsonHtmlTable = ConvertJsonToTable(record, 'jsonTable', null, 'Download');
+
+var record= JSON.parse(xmlhttp.responseText);
 var tab=new Array();
 var idx=-1;
 var lastcase="";
@@ -18,11 +18,13 @@ for (i=0;i<record.length;i++)
 	idx++;
 	tab[idx]=new Object();
 	tab[idx]["Casename"]=record[i]["Casename"];
-	tab[idx][record[i]["Time"]]=record[i]["Duration1"];
+	tab[idx][record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
 	i++;
+	if(i>=record.length)
+		break;
 	lastcase=tab[idx]["Casename"];
     };
-    tab[idx][record[i]["Time"]]=record[i]["Duration1"];
+    tab[idx][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
 };
 	
 var jsonHtmlTable = ConvertJsonToTable(tab, 'jsonTable', null, 'Download');
@@ -42,9 +44,9 @@ $( "div >table > tbody >tr" ).click(function(event) {
     var data = {
 	datasets : [
 		{
-			fillColor : "rgba(220,220,220,1)",
-			strokeColor : "rgba(220,220,220,1)",
-			pointColor : "rgba(220,220,220,1)",
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(0,0,60,1)",
+			pointColor : "rgba(151,187,205,1)",
 			pointStrokeColor : "#fff",
 		}
 	]
@@ -62,111 +64,33 @@ console.log(i+":"+record[i]);
   d1[idx]=record[i];
   l[idx]=i;
   idx++;
+ }else
+ {
+    data["datasets"][0]["title"]=record[i];
  }
 };
  data["datasets"][0]["data"]=d1;
 data["labels"]=l;
 var ctx = document.getElementById("myChart").getContext("2d");
-var myNewChart = new Chart(ctx).Line(data);
-document.getElementById("myChart").style.top=(event.clientY+10)+"px";
+var max_=Math.max.apply(null,d1);
+var step=10;
+var option= 
+{
+    scaleOverride: true,
+    scaleSteps: step,
+    scaleStepWidth: Math.ceil(max_ / step * 1.5),
+    scaleStartValue: 0
+};
+var myNewChart = new Chart(ctx).Line(data,option);
+document.getElementById("myChart").style.top=(window.pageYOffset+event.clientY+10)+"px";
 
 document.getElementById("myChart").style.display="block";   
  
 
 });
-//return record;
 }}
-xmlhttp.open("GET","http://10.19.192.51:8888/data?database=Library&table=cuFFT",true);
+xmlhttp.open("GET","/data?database=Library&table=cuFFT",true);
 xmlhttp.send(null)
 };
 
 
-
-function draw(point)
-{
-   var data = {
-	datasets : [
-		{
-			fillColor : "rgba(220,220,220,0.5)",
-			strokeColor : "rgba(220,220,220,1)",
-			pointColor : "rgba(220,220,220,1)",
-			pointStrokeColor : "#fff",
-		},
-		{
-			fillColor : "rgba(151,187,205,0.5)",
-			strokeColor : "rgba(151,187,205,1)",
-			pointColor : "rgba(151,187,205,1)",
-			pointStrokeColor : "#fff",
-		}
-	]
-};
-var d1=new Array();
-var d2=new Array();
-var l=new Array();
-var idx=0;
-for (var i in record)
-{
-  if (i != "Casename")
-  {
-  d1[idx]=record[i].Duration1;
-  d2[idx]=record[i].Duration2;
-  l[idx]=i;
-  idx++;
-  }
-};
-
-data["datasets"][0]["data"]=d1;
-data["datasets"][1]["data"]=d2;
-data["labels"]=l;
-var ctx = document.getElementById("myChart").getContext("2d");
-var myNewChart = new Chart(ctx).Line(data);
-    
-};
-
-
-function show()
-{
-var xmlhttp;
-xmlhttp=new XMLHttpRequest();
-xmlhttp.onreadystatechange=function()
-{
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-document.getElementById("myDiv").innerHTML="";
- var record= JSON.parse(xmlhttp.responseText);
-var data = {
-	datasets : [
-		{
-			fillColor : "rgba(220,220,220,0.5)",
-			strokeColor : "rgba(220,220,220,1)",
-			pointColor : "rgba(220,220,220,1)",
-			pointStrokeColor : "#fff",
-		},
-		{
-			fillColor : "rgba(151,187,205,0.5)",
-			strokeColor : "rgba(151,187,205,1)",
-			pointColor : "rgba(151,187,205,1)",
-			pointStrokeColor : "#fff",
-		}
-	]
-};
-var d1=new Array();
-var d2=new Array();
-var l=new Array();
-for (var i in record)
-{
-  d1[i]=record[i].Duration1;
-  d2[i]=record[i].Duration2;
-  l[i]=record[i].Time;
-};
-
-data["datasets"][0]["data"]=d1;
-data["datasets"][1]["data"]=d2;
-data["labels"]=l;
-var ctx = document.getElementById("myChart").getContext("2d");
-var myNewChart = new Chart(ctx).Line(data);
-}
-}
-xmlhttp.open("GET","http://10.19.192.51:8888/data?database=Library&table=cuFFT",true);
-xmlhttp.send(null);
-}
