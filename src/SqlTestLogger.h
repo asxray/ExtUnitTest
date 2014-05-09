@@ -15,6 +15,7 @@ class SqlTestLogger : public dp::Singleton<SqlTestLogger>,
   std::string table;
   std::ofstream mSqlScript;
   std::string CurTime;
+  struct tm* timeinfo;
 
  public:
   void init(std::string& filepath, std::string& dbname, std::string& table);
