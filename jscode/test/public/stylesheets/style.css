@@ -3,6 +3,19 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+#myChart
+{
+	  
+  position:absolute;
+ left:10px;
+  top:10px;
+  display:none;
+   z-index:0;
+    opacity:1;
+background-color: white;
+}
 a {
   color: #00B7FF;
 }
+
+
