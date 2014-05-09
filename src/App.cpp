@@ -28,6 +28,12 @@ App::App(const int argc, char const* const* const argv)
       ("sql", boost::program_options::value<std::string>()->default_value(
                   "testlog.sql"),
        "filename of sql format log")  //
+      ("db",
+       boost::program_options::value<std::string>()->default_value("DBNAME"),
+       "SQL Database name")  //
+      ("table",
+       boost::program_options::value<std::string>()->default_value("TABLENAME"),
+       "SQL Table name")  //
       ;
   boost::program_options::store(
       boost::program_options::parse_command_line(argc, argv, this->options),
