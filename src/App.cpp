@@ -43,6 +43,10 @@ App::App(const int argc, char const* const* const argv)
 App::~App() {};
 int App::Exec() {
   try {
+    if (this->vmap.count("help")) {
+      std::cout << this->options << std::endl;
+      throw 0;
+    }
     this->SetUp();
     this->Run();
     this->TearDown();
@@ -52,12 +56,7 @@ int App::Exec() {
   }
   return 0;
 };
-void App::SetUp() {
-  if (this->vmap.count("help")) {
-    std::cout << this->options << std::endl;
-    throw 0;
-  }
-}
+void App::SetUp() {}
 void App::Run() {
   std::shared_ptr<BaseTestRunner> runner;
   if (this->vmap.count("list")) {
