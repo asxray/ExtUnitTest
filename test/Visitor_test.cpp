@@ -21,6 +21,7 @@ class Cleaner : public ::dp::Visitor<House> {
  public:
   virtual ~Cleaner() {}
   void Visit(House* const aHouse) { BOOST_CHECK_EQUAL(aHouse->height, 3); }
+  void PostVisit(House* const) {};
 };
 
 BOOST_AUTO_TEST_CASE(visitor) {

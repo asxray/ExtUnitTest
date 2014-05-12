@@ -22,8 +22,15 @@ MultiThreadTestRunner::~MultiThreadTestRunner() {
   mThG.join_all();
 }
 void MultiThreadTestRunner::Visit(TestCase* const pTest) {
+  assert(pTest);
   while (!mTestQ.push(pTest)) {
     boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
   };
+}
+void MultiThreadTestRunner::PostVisit(eut::TestSuite* const pTest) {
+  assert(pTest);
+  if (nullptr != pTest->getParent()) return;
+  while (!mTestQ.empty())
+    boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
 }
 }

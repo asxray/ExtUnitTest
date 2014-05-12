@@ -11,6 +11,7 @@ class MultiThreadTestRunner : public BaseTestRunner {
   MultiThreadTestRunner(int nThreads);
   virtual ~MultiThreadTestRunner(void);
   virtual void Visit(TestCase *const pTest);
+  virtual void PostVisit(TestSuite *const pTest);
 
  private:
   bool isRunning;

@@ -58,5 +58,7 @@ void BaseTestRunner::VisitImpl(TestCase* const t) {
   NotifyImpl(t);
 }
 
-void BaseTestRunner::Visit(TestSuite* const t) { assert(t); }
+void BaseTestRunner::Visit(TestSuite* const) {}
+void BaseTestRunner::PostVisit(TestCase* const) {}
+void BaseTestRunner::PostVisit(TestSuite* const) {}
 } /* namespace eut */

@@ -42,11 +42,13 @@ class Insect : public dp::Visitor<brick>, public dp::Visitor<wall> {
     BOOST_CHECK_EQUAL(aPlace->n, 1);
     std::cout << aPlace->getFullname() << std::endl;
   }
+  virtual void PostVisit(brick* const aPlace) {}
   virtual void Visit(wall* const aPlace) {
     ++wallcount;
     BOOST_CHECK_EQUAL(aPlace->n, 3);
     std::cout << aPlace->getFullname() << std::endl;
   }
+  virtual void PostVisit(wall* const aPlace) {}
   int wallcount;
   int brickcount;
 };
