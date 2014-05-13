@@ -10,15 +10,12 @@
 
 namespace eut {
 BaseTestRunner::BaseTestRunner() {}
-
 BaseTestRunner::~BaseTestRunner() {}
 void BaseTestRunner::Notify() const {}
-
 void BaseTestRunner::Visit(TestCase* const t) {
   assert(t);
   return (VisitImpl(t));
 }
-
 void BaseTestRunner::VisitImpl(TestCase* const t) {
   assert(t);
   try {
@@ -57,8 +54,6 @@ void BaseTestRunner::VisitImpl(TestCase* const t) {
   t->setStatus(TestStatus::END);
   NotifyImpl(t);
 }
-
 void BaseTestRunner::Visit(TestSuite* const) {}
-void BaseTestRunner::PostVisit(TestCase* const) {}
-void BaseTestRunner::PostVisit(TestSuite* const) {}
+void BaseTestRunner::Wait() {};
 } /* namespace eut */

@@ -26,10 +26,6 @@ class Visitor<T, R, false> : public virtual BaseVisitor {
  public:
   virtual ~Visitor() {}
   virtual R Visit(T* const) = 0;
-  virtual bool PreVisit(T* const) {
-    return true;
-  };
-  virtual R PostVisit(T* const) = 0;
 };
 
 template <class T, typename R>
@@ -37,17 +33,13 @@ class Visitor<T, R, true> : public virtual BaseVisitor {
  public:
   virtual ~Visitor() {}
   virtual R Visit(T const* const) = 0;
-  virtual bool PreVisit(T const* const) {
-    return true;
-  };
-  virtual R PostVisit(T const* const) {
-    return R();
-  };
 };
 
 template <typename R, class T>
 struct DefaultCatchAll {
-  static R OnUnknownVisitor(T* const, BaseVisitor const* const) { return R(); }
+  static R OnUnknownVisitor(T* const, BaseVisitor const* const) {
+    return (R());
+  }
 };
 
 template <typename R = void,
@@ -67,10 +59,8 @@ class BaseVisitable<R, CatchAll, false> {
   static ReturnType AcceptImpl(T* const visited, BaseVisitor* const guest) {
     assert(visited);
     assert(guest);
-    if (auto* p = dynamic_cast<Visitor<T, R>*>(guest)) {
-      if (p->PreVisit(visited)) p->Visit(visited);
-      return p->PostVisit(visited);
-    }
+    if (auto* p = dynamic_cast<Visitor<T, R>*>(guest))
+      return (p->Visit(visited));
     return (CatchAll<R, T>::OnUnknownVisitor(visited, guest));
   }
 };
@@ -84,14 +74,11 @@ class BaseVisitable<R, CatchAll, true> {
 
  protected:
   template <class T>
-  static ReturnType AcceptImpl(T const* const visited,
-                               BaseVisitor* const guest) {
+  static ReturnType AcceptImpl(T* const visited, BaseVisitor* const guest) {
     assert(visited);
     assert(guest);
-    if (auto* p = dynamic_cast<Visitor<T, R, true>*>(guest)) {
-      if (p->PreVisit(visited)) p->Visit(visited);
-      return p->PostVisit(visited);
-    }
+    if (auto* p = dynamic_cast<Visitor<T, R, true>*>(guest))
+      return (p->Visit(visited));
     return (CatchAll<R, T>::OnUnknownVisitor(const_cast<T&>(visited), guest));
   }
 };

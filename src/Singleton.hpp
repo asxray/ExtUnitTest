@@ -2,13 +2,17 @@
 #define SINGLETON_HPP
 
 #include <boost/shared_ptr.hpp>
+#include <boost/thread/locks.hpp>
+#include <boost/thread/mutex.hpp>
+
 namespace dp {
 template <typename T>
 class Singleton {
  public:
   static T* Instance() {
     if (0 == mInstance.get()) {
-#pragma omp critical
+      static boost::mutex mux;
+      boost::lock_guard<boost::mutex> guard(mux);
       if (0 == mInstance.get()) mInstance.reset(new T);
     }
     return (mInstance.get());
