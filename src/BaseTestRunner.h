@@ -22,6 +22,7 @@ class BaseTestRunner : public dp::Visitor<TestCase>,
   virtual ~BaseTestRunner();
   virtual void Visit(TestCase* const);
   virtual void Visit(TestSuite* const);
+  virtual void Wait(void);
 
  protected:
   virtual void Notify() const;

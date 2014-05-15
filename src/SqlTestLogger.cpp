@@ -1,30 +1,45 @@
 #include "SqlTestLogger.h"
 
-#include <boost/algorithm/string.hpp>
+#include <chrono>
+#include <sstream>
 #include <time.h>
 
 namespace eut {
-SqlTestLogger::SqlTestLogger() {
+SqlTestLogger::SqlTestLogger() : timeinfo(0), mQ(4096), isRunning(true) {
   time_t CurrentTime = 0;
   time(&CurrentTime);
   timeinfo = localtime(&CurrentTime);
   Register(TestStatus::END, [&](TestCase const* const t) {
-    mSqlScript << "INSERT INTO " << table
-               << " (Casename,Time,Result,Duration1,Duration2,Log) VALUES "
-               << "(\"" << t->getFullname() << "\","
-               << (timeinfo->tm_year + 1900)
-               << ((timeinfo->tm_mon + 1) < 10 ? "0" : "")
-               << (timeinfo->tm_mon + 1)
-               << ((timeinfo->tm_mday) < 10 ? "0" : "") << timeinfo->tm_mday
-               << timeinfo->tm_hour << timeinfo->tm_min << timeinfo->tm_sec
-               << ",\"" << t->getRetStr() << "\",\"" << t->getTimer(0)
-               << "\",\"" << t->getTimer(1) << "\",\"" << t->getErrorLog()
-               << "\");" << std::endl;
+    std::ostringstream oStr;
+    oStr << "INSERT INTO " << table
+         << " (Casename,Time,Result,Duration1,Duration2,Log) VALUES "
+         << "(\"" << t->getFullname() << "\"," << (timeinfo->tm_year + 1900)
+         << ((timeinfo->tm_mon + 1) < 10 ? "0" : "") << (timeinfo->tm_mon + 1)
+         << ((timeinfo->tm_mday) < 10 ? "0" : "") << timeinfo->tm_mday
+         << timeinfo->tm_hour << timeinfo->tm_min << timeinfo->tm_sec << ",\""
+         << t->getRetStr() << "\",\"" << t->getTimer(0) << "\",\""
+         << t->getTimer(1) << "\",\"" << t->getErrorLog() << "\");";
+    std::string* pStr = new std::string(oStr.str());
+    while (!mQ.push(pStr))
+      std::this_thread::sleep_for(std::chrono::microseconds(1));
+  });
+  this->mThrd = std::thread([&](void) {
+    while (isRunning) {
+      std::string* aStr;
+      while (this->mQ.pop(aStr)) {
+        this->mSqlScript << *aStr << std::endl;
+        delete aStr;
+        std::this_thread::sleep_for(std::chrono::microseconds(1));
+      };
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    };
   });
 };
 
-SqlTestLogger::SqlTestLogger(SqlTestLogger& t) {};
+SqlTestLogger::SqlTestLogger(SqlTestLogger&) {};
 SqlTestLogger::~SqlTestLogger() {
+  this->isRunning = false;
+  this->mThrd.join();
   mSqlScript.close();
 };
 

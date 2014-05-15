@@ -36,6 +36,7 @@ Singleton.hpp\
 SqlTestLogger.h\
 TestBody.h\
 TestCase.h\
+TestException.h\
 TestResource.h\
 TestResult.h\
 TestStatus.h\
