@@ -6,6 +6,8 @@
  */
 
 #include "BaseTestRunner.h"
+//
+#include "TestException.h"
 #include <assert.h>
 
 namespace eut {
@@ -18,38 +20,37 @@ void BaseTestRunner::Visit(TestCase* const t) {
 }
 void BaseTestRunner::VisitImpl(TestCase* const t) {
   assert(t);
+  bool hasSetUp = false;
+  t->setStatus(TestStatus::START);
+  NotifyImpl(t);
   try {
-    t->setStatus(TestStatus::START);
+    t->setStatus(TestStatus::SETUP);
     NotifyImpl(t);
-    try {
-      t->SetUp();
-      t->setStatus(TestStatus::SETUP);
-      NotifyImpl(t);
-    }
-    catch (...) {
-      t->setRet(TestResult::RET::ERROR);
-      throw;
-    }
-    try {
+    t->SetUp();
+    hasSetUp = true;
+  }
+  catch (TestException& e) {
+    t->setRet(TestResult::RET::ERROR);
+    t->setErrorLog(boost::diagnostic_information(e));
+  }
+  if (hasSetUp) try {
       t->setStatus(TestStatus::RUNNING);
       NotifyImpl(t);
       t->Run();
       t->setRet(TestResult::RET::PASSED);
     }
-    catch (...) {
-      t->setRet(TestResult::RET::FAILED);
-      throw;
-    }
-    try {
-      t->TearDown();
-      t->setStatus(TestStatus::TEARDOWN);
-      NotifyImpl(t);
-    }
-    catch (...) {
-      throw;
-    }
+  catch (TestException& e) {
+    t->setRet(TestResult::RET::FAILED);
+    t->setErrorLog(boost::diagnostic_information(e));
   }
-  catch (...) {
+  try {
+    t->TearDown();
+    t->setStatus(TestStatus::TEARDOWN);
+    NotifyImpl(t);
+  }
+  catch (TestException& e) {
+    t->setRet(TestResult::RET::ERROR);
+    t->setErrorLog(boost::diagnostic_information(e));
   }
   t->setStatus(TestStatus::END);
   NotifyImpl(t);
