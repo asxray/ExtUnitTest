@@ -2,9 +2,8 @@ var sys = require('sys');
 var aSql = require('mysql');
 var express = require("express");
 var app = express();
-
+app.use(express.compress());
 app.use(express.static('public'));
-
 function getSQL(databasename,tablename,callback){
 console.log("getSQL");
     var client = aSql.createConnection({
@@ -12,7 +11,7 @@ console.log("getSQL");
 	user: "root",
 	password: "1",
     });
-    var query="SELECT Casename,Time,Duration1,DriverVersion,CL FROM "+tablename +" AS t1 WHERE t1.Time in (SELECT  Time from (SELECT DISTINCT Time FROM "+ tablename +" ORDER BY Time DESC LIMIT 0,10) as t2) ORDER BY Casename,Time;";
+    var query="SELECT Casename,Time,Duration1,DriverVersion,CL FROM "+tablename +" AS t1 WHERE t1.Result=\"PASSED\" and  t1.Time in (SELECT  Time from (SELECT DISTINCT Time FROM "+ tablename +" ORDER BY Time DESC LIMIT 0,10) as t2) ORDER BY Casename,Time;";
   console.log(query);
  client.query("USE "+databasename);
  client.query(query, function (err, result){
