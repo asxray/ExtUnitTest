@@ -1,18 +1,43 @@
 var tab;
+var current_tab;
 var recordsPerPage;
 var page;
 var rootelement;
 var header;
 var header_array;
+function Search()
+{
+	rootelement.innerHTML="";
+	addHeader(rootelement,header_array);
+	var pattern=document.getElementById("input").value;
+	var regx=new RegExp(pattern);
+	delete current_tab;
+	current_tab=new Array();
+	for(var i=0;i<tab.length;i++)
+	{
+		if(tab[i]["Casename"].match(regx))
+		{
+			current_tab.push(tab[i]);
+			
+		}
+	};
+	page=1;
+	for(var k=0;k<page*recordsPerPage && k<current_tab.length ;k++)
+	{	
+       		 setRow(rootelement,current_tab[k],header_array);
+	};
+};
+
+
 function Next()
 {
-	if(page<Math.ceil(tab.length/recordsPerPage))
+	if(page<Math.ceil(current_tab.length/recordsPerPage))
 	{
 		rootelement.innerHTML="";
 		addHeader(rootelement,header_array);
-		for(var k=page*recordsPerPage;k<(page+1)*recordsPerPage;k++)
+		for(var k=page*recordsPerPage;k<(page+1)*recordsPerPage && k < current_tab.length ;k++)
 		{
-			setRow(rootelement,tab[k],header_array);
+			setRow(rootelement,current_tab[k],header_array);
 		};
 		page++;
 	}
@@ -24,9 +49,9 @@ function Back()
 	{
 		rootelement.innerHTML="";
 		addHeader(rootelement,header_array);
-		for(var k=(page-2)*recordsPerPage;k<(page-1)*recordsPerPage;k++)
+		for(var k=(page-2)*recordsPerPage;k<(page-1)*recordsPerPage && k<current_tab.length ;k++)
 		{
-			setRow(rootelement,tab[k],header_array);
+			setRow(rootelement,current_tab[k],header_array);
 		};
 	page--;
 	}
@@ -92,7 +117,9 @@ for (i=0;i<record.length;i++)
     tab[idx][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
     
 };
-for(var k=0;k<page*recordsPerPage;k++)
+
+current_tab=tab;
+for(var k=0;k<page*recordsPerPage && k<tab.length ;k++)
 {
 	setRow(rootelement,tab[k],header_array);
 };

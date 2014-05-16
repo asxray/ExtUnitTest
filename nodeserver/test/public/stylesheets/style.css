@@ -44,3 +44,17 @@ left:5px;
 top:100px;
 }
 
+#_input
+{
+position:absolute;
+left:100px;
+top:15px;
+width: 300px;
+}
+
+#_button3
+{
+position:absolute;
+left:300px;
+top:15px;
+};
