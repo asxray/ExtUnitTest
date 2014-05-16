@@ -3,15 +3,16 @@ var recordsPerPage;
 var page;
 var rootelement;
 var header;
+var header_array;
 function Next()
 {
 	if(page<Math.ceil(tab.length/recordsPerPage))
 	{
 		rootelement.innerHTML="";
-		addHeader(rootelement,header);
+		addHeader(rootelement,header_array);
 		for(var k=page*recordsPerPage;k<(page+1)*recordsPerPage;k++)
 		{
-			setRow(rootelement,tab[k]);
+			setRow(rootelement,tab[k],header_array);
 		};
 		page++;
 	}
@@ -22,10 +23,10 @@ function Back()
 	if(page>=2)
 	{
 		rootelement.innerHTML="";
-		addHeader(rootelement,header);
+		addHeader(rootelement,header_array);
 		for(var k=(page-2)*recordsPerPage;k<(page-1)*recordsPerPage;k++)
 		{
-			setRow(rootelement,tab[k]);
+			setRow(rootelement,tab[k],header_array);
 		};
 	page--;
 	}
@@ -54,11 +55,18 @@ tab=new Array();
 var idx=-1;
 var lastcase="";
 header=new Object();
-for(i=0;i<record.length;i++)
+header_array=new Array();
+
+for(var i=0;i<record.length;i++)
 {
 	header[record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=0;
 };
-addHeader(rootelement,header);
+for( var i in header)
+{
+	header_array.push(i);
+}
+header_array.sort();
+addHeader(rootelement,header_array);
 for (i=0;i<record.length;i++)
 {
     if(record[i]["Casename"]!=lastcase)
@@ -86,13 +94,8 @@ for (i=0;i<record.length;i++)
 };
 for(var k=0;k<page*recordsPerPage;k++)
 {
-	setRow(rootelement,tab[k]);
+	setRow(rootelement,tab[k],header_array);
 };
-//var jsonHtmlTable = ConvertJsonToTable(tab, 'jsonTable', null, 'Download');
-
-//document.getElementById("myDiv").innerHTML=jsonHtmlTable ;
-
-
 
 }};
 xmlhttp.open("GET","/data?database=Library&table=cuFFT",true);
@@ -110,11 +113,11 @@ function addHeader(root,row)
         subp.appendChild(document.createTextNode("Casename"));
         p.appendChild(subp);
 
-        for(var i in row)
+        for(var i=0;i<row.length;i++)
         {
                 subp=document.createElement("div");
                 subp.className="Cell";
-		var ar=i.split("_");
+		var ar=row[i].split("_");
 		for(var j in ar)
 		{
 			subp.innerHTML="date:"+ar[0]+"<br/>"
@@ -126,24 +129,32 @@ function addHeader(root,row)
 	root.appendChild(p);
 };
 
-function setRow(root,row){
+function setRow(root,row,headerArray){
 	var p = document.createElement("div");
 	p.className="Row";
-	for(var i in row)
+	var sortedRow=new Array();
+	for(var i=-1;i<headerArray.length;i++)
 	{
 		var subp=document.createElement("div");
 		subp.className="Cell";
-		subp.appendChild(document.createTextNode(row[i]));
+		if(i==-1)
+		{
+			subp.appendChild(document.createTextNode(row["Casename"]));
+		}else
+		{
+			subp.appendChild(document.createTextNode(row[headerArray[i]]));	
+			sortedRow.push(row[headerArray[i]]);
+		};
 		p.appendChild(subp);
 	}
-	p.onclick = function () {drawRowData(row);};
+	p.onclick = function () {drawRowData(row["Casename"],sortedRow,headerArray);};
 	root.appendChild(p);
 }
 
 
 
 
-function drawRowData(rowdata)
+function drawRowData(casename, rowdata, headerArray)
 {
     var data = {
         datasets : [
@@ -155,25 +166,11 @@ function drawRowData(rowdata)
                 }
         ]
 };
-    var d1=new Array();
-    var l=new Array();
-    var idx=0;
-for (var i in rowdata)
-{
- if (i != "Casename")
- {
-  d1[idx]=rowdata[i];
-  l[idx]=i;
-  idx++;
- }else
- {
-    data["datasets"][0]["title"]=rowdata[i];
- }
-};
- data["datasets"][0]["data"]=d1;
-data["labels"]=l;
+data["datasets"][0]["title"]=casename;
+data["datasets"][0]["data"]=rowdata;
+data["labels"]=headerArray;
 var ctx = document.getElementById("myChart").getContext("2d");
-var max_=Math.max.apply(null,d1);
+var max_=Math.max.apply(null,rowdata);
 var step=10;
 var option=
 {
