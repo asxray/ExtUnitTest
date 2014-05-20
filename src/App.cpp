@@ -17,6 +17,8 @@ App::App(const int argc, char const* const* const argv)
     : options("allowed options") {
   this->options.add_options()             //
       ("help,h", "produce help message")  //
+      ("compare,c", boost::program_options::value<bool>()->default_value(false),
+       "run additional tests to compare the performance")  //
       ("filter", boost::program_options::value<std::vector<std::string> >(),
        "filter keywords, only the matched tests will be run.")  //
       ("job,j", boost::program_options::value<int>()->default_value(8),
@@ -63,13 +65,12 @@ void App::Run() {
     runner.reset(new ListTestRunner);
   } else if (this->vmap.at("job").as<int>() > 1) {
     runner.reset(new MultiThreadTestRunner(this->vmap.at("job").as<int>()));
-    runner->Attach(ConsoleTestLogger::Instance());
-    runner->Attach(SqlTestLogger::Instance());
   } else {
     runner.reset(new BaseTestRunner);
-    runner->Attach(ConsoleTestLogger::Instance());
-    runner->Attach(SqlTestLogger::Instance());
   }
+  runner->Attach(ConsoleTestLogger::Instance());
+  runner->Attach(SqlTestLogger::Instance());
+
   RootTestSuite::Instance()->Accept(runner.get());
 };
 void App::TearDown() {};
