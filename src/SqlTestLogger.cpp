@@ -11,14 +11,15 @@ SqlTestLogger::SqlTestLogger() : timeinfo(0), mQ(4096), isRunning(true) {
   timeinfo = localtime(&CurrentTime);
   Register(TestStatus::END, [&](TestCase const* const t) {
     std::ostringstream oStr;
-    oStr << "INSERT INTO " << table
-         << " (Casename,Time,Result,Duration1,Duration2,Log) VALUES "
-         << "(\"" << t->getFullname() << "\"," << (timeinfo->tm_year + 1900)
+    oStr << "db." << table << ".insert({Casename:\"" << t->getFullname()
+         << "\",Time:" << (timeinfo->tm_year + 1900)
          << ((timeinfo->tm_mon + 1) < 10 ? "0" : "") << (timeinfo->tm_mon + 1)
          << ((timeinfo->tm_mday) < 10 ? "0" : "") << timeinfo->tm_mday
-         << timeinfo->tm_hour << timeinfo->tm_min << timeinfo->tm_sec << ",\""
-         << t->getRetStr() << "\",\"" << t->getTimer(0) << "\",\""
-         << t->getTimer(1) << "\",\"" << t->getErrorLog() << "\");";
+         << timeinfo->tm_hour << timeinfo->tm_min << timeinfo->tm_sec
+         << ",Result:\"" << t->getRetStr() << "\""
+         << ",Duration1:" << t->getTimer(0) << ",Duration2:" << t->getTimer(1)
+         << ",Log:\"" << t->getErrorLog() << "\"})";
+
     std::string* pStr = new std::string(oStr.str());
     while (!mQ.push(pStr))
       std::this_thread::sleep_for(std::chrono::microseconds(1));
