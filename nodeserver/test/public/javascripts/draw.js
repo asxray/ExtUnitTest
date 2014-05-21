@@ -57,20 +57,17 @@ function Back()
 	}
 };
 
-
-
 function getData()
 {
 var xmlhttp;
 xmlhttp=new XMLHttpRequest();
+//document.getElementById("select_id").selectedIndex = -1;
 xmlhttp.onreadystatechange=function(){
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
 {
 document.getElementById("myChart").onclick=function() {
 this.style.display="none";
 };
-
-
 rootelement=document.getElementById("myDiv");
 document.getElementById("myDiv").innerHTML="";
 recordsPerPage=1000;
@@ -81,10 +78,23 @@ var idx=-1;
 var lastcase="";
 header=new Object();
 header_array=new Array();
-
+casename_hash=new Object();
 for(var i=0;i<record.length;i++)
 {
 	header[record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=0;
+	casename_hash[record[i]["Casename"]]=0;
+};
+var tabidx=0;
+for(var i in casename_hash)
+{
+	tab[tabidx]=new Object();
+	tab[tabidx]["Casename"]=i;
+	casename_hash[i]=tabidx;
+	for( var a in header)
+	{
+		tab[tabidx][a]=0;
+	};
+	tabidx++;
 };
 for( var i in header)
 {
@@ -92,30 +102,33 @@ for( var i in header)
 }
 header_array.sort();
 addHeader(rootelement,header_array);
-for (i=0;i<record.length;i++)
+
+
+
+for (var i=0;i<record.length;i++)
 {
-    if(record[i]["Casename"]!=lastcase)
-    {	
-	idx++;
-	tab[idx]=new Object();
-	tab[idx]["Casename"]=record[i]["Casename"];
-	for( a in header)
-	{
-		if(a!=record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"])
-		{
-			tab[idx][a]=0;
-		}else
-		{
-			tab[idx][record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
-		}
-	};
-	i++;
-	if(i>=record.length)
-		break;
-	lastcase=tab[idx]["Casename"];
-    };
-    tab[idx][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
-    
+//    if(record[i]["Casename"]!=lastcase)
+//    {	
+//	idx++;
+//	tab[idx]=new Object();
+//	tab[idx]["Casename"]=record[i]["Casename"];
+//	for( a in header)
+//	{
+//		if(a!=record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"])
+//		{
+//			tab[idx][a]=0;
+//		}else
+//		{
+//			tab[idx][record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
+//		}
+//	};
+//	i++;
+//	if(i>=record.length)
+//		break;
+//	lastcase=tab[idx]["Casename"];
+//    };
+//    tab[idx][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
+	tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
 };
 
 current_tab=tab;
@@ -123,10 +136,26 @@ for(var k=0;k<page*recordsPerPage && k<tab.length ;k++)
 {
 	setRow(rootelement,tab[k],header_array);
 };
-
 }};
-xmlhttp.open("GET","/data?database=Library&table=cuFFT",true);
+//xmlhttp.open("GET","/data?database=Library&table=cuFFT",true);
+//xmlhttp.send(null);
+
+var tb=document.getElementById("select_id").value;
+xmlhttp.open("GET","/data?database=Library&table="+tb,true);
 xmlhttp.send(null);
+
+};
+
+function getIdxByCasename(_tab,_casename)
+{
+	for(var i=0;i<_tab.length;i++)
+	{
+		if(_tab[i]["Casename"]==_casename)
+		{
+			return i;
+		}
+	};
+	return -1;
 };
 
 
@@ -178,9 +207,6 @@ function setRow(root,row,headerArray){
 	root.appendChild(p);
 }
 
-
-
-
 function drawRowData(casename, rowdata, headerArray)
 {
     var data = {
@@ -209,7 +235,4 @@ var option=
 var myNewChart = new Chart(ctx).Line(data,option);
 document.getElementById("myChart").style.top=(window.pageYOffset+event.clientY+10)+"px";
 document.getElementById("myChart").style.display="block";
-
 };
-
-

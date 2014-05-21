@@ -8,17 +8,23 @@
    <button onclick="Back()">Back</button>
 </div>
 <div id=_input>
+<select onchange="getData()" id="select_id">
+  <option value="cuFFT">cuFFT</option>
+  <option value="cuRAND">cuRAND</option>
+</select>
+
+
 <input type="text" id="input" value="">
 </div>
 <div id="_button3">
 	<button onclick="Search()">Search</button>
 </div>
-
 <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
 <script src="javascripts/Chart.js"></script>
 <script src="javascripts/draw.js"></script>
 <script>
-window.onload=getData();
+document.getElementById("select_id").selectedIndex = -1;
+//window.onload=getData();
 </script>
 
 </head>

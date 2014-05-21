@@ -21,6 +21,8 @@ a {
  .Row
     {
         display: table-row;
+	width auto;
+	clear:both;
     }
 .Cell
     {
@@ -55,6 +57,14 @@ width: 300px;
 #_button3
 {
 position:absolute;
-left:300px;
+left:350px;
+top:15px;
+};
+
+
+#_select
+{
+position:absolute;
+left:150px;
 top:15px;
 };
