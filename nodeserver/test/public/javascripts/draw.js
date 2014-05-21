@@ -107,28 +107,11 @@ addHeader(rootelement,header_array);
 
 for (var i=0;i<record.length;i++)
 {
-//    if(record[i]["Casename"]!=lastcase)
-//    {	
-//	idx++;
-//	tab[idx]=new Object();
-//	tab[idx]["Casename"]=record[i]["Casename"];
-//	for( a in header)
-//	{
-//		if(a!=record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"])
-//		{
-//			tab[idx][a]=0;
-//		}else
-//		{
-//			tab[idx][record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
-//		}
-//	};
-//	i++;
-//	if(i>=record.length)
-//		break;
-//	lastcase=tab[idx]["Casename"];
-//    };
-//    tab[idx][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
 	tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
+	if(typeof record[i]["Duration2"] != "undefined")
+	{
+		tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]+"<br/>"+record[i]["Duration2"];
+	};
 };
 
 current_tab=tab;
@@ -198,7 +181,8 @@ function setRow(root,row,headerArray){
 			subp.appendChild(document.createTextNode(row["Casename"]));
 		}else
 		{
-			subp.appendChild(document.createTextNode(row[headerArray[i]]));	
+			subp.innerHTML=row[headerArray[i]];
+			//subp.appendChild(document.createTextNode(row[headerArray[i]]));	
 			sortedRow.push(row[headerArray[i]]);
 		};
 		p.appendChild(subp);
@@ -213,17 +197,38 @@ function drawRowData(casename, rowdata, headerArray)
         datasets : [
                 {
                         fillColor : "rgba(151,187,205,0.5)",
-                        strokeColor : "rgba(0,0,60,1)",
+                        strokeColor : "rgba(151,187,205,1)",
                         pointColor : "rgba(151,187,205,1)",
                         pointStrokeColor : "#fff",
-                }
+                },
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+			pointStrokeColor : "#fff",
+		}
+	
         ]
 };
-data["datasets"][0]["title"]=casename;
-data["datasets"][0]["data"]=rowdata;
+var row1=new Array();
+var row2=new Array();
+
+for(var i=0;i<rowdata.length;i++)
+{
+	var ar=rowdata[i].split("<br/>");
+	row1.push(ar[0]);
+	if(ar.length>1)
+		row2.push(ar[1]);
+	else
+		row2.push(0);
+}
+data["datasets"][0]["title"]="cuRAND";
+data["datasets"][1]["title"]="MKL";
+data["datasets"][0]["data"]=row1;
+data["datasets"][1]["data"]=row2;
 data["labels"]=headerArray;
 var ctx = document.getElementById("myChart").getContext("2d");
-var max_=Math.max.apply(null,rowdata);
+var max_=Math.max.apply(null,row2);
 var step=10;
 var option=
 {

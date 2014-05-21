@@ -12,7 +12,7 @@ aMongo.connect("mongodb://10.19.192.234:27017/"+databasename, function(err,db){
 if(err){console.log("error when connecting to mongodb:"+err);return}else{console.log("connected to MongoDB");}
 var collection=db.collection(tablename);
 //collection.ensureIndex({Casename:1});
-collection.find({},{_id:0,Casename:1,Time:1,Duration1:1,DriverVersion:1,CL:1}).toArray(function(err,items){
+collection.find({},{_id:0,Casename:1,Time:1,Duration1:1,Duration2:1,DriverVersion:1,CL:1}).toArray(function(err,items){
 if(err){console.log("error when querying:"+err);return};
 callback(err,items);
 });
