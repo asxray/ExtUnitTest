@@ -5,6 +5,7 @@ var page;
 var rootelement;
 var header;
 var header_array;
+var tb;
 function Search()
 {
 	rootelement.innerHTML="";
@@ -108,7 +109,8 @@ addHeader(rootelement,header_array);
 for (var i=0;i<record.length;i++)
 {
 	tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
-	if(typeof record[i]["Duration2"] != "undefined")
+	//if(typeof record[i]["Duration2"] != "undefined" &&  record[i]["Duration2"]!="0")
+	if(tb == "cuRAND")
 	{
 		tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]+"<br/>"+record[i]["Duration2"];
 	};
@@ -123,9 +125,15 @@ for(var k=0;k<page*recordsPerPage && k<tab.length ;k++)
 //xmlhttp.open("GET","/data?database=Library&table=cuFFT",true);
 //xmlhttp.send(null);
 
-var tb=document.getElementById("select_id").value;
-xmlhttp.open("GET","/data?database=Library&table="+tb,true);
-xmlhttp.send(null);
+tb=document.getElementById("select_id").value;
+if(tb != "Select")
+{
+	xmlhttp.open("GET","/data?database=Library&table="+tb,true);
+	xmlhttp.send(null);
+}else
+{
+	document.getElementById("myDiv").innerHTML="";	
+};
 
 };
 
@@ -151,6 +159,13 @@ function addHeader(root,row)
         subp.className="Cell";
         subp.appendChild(document.createTextNode("Casename"));
         p.appendChild(subp);
+	if(tb == "cuRAND")
+	{
+		subp = document.createElement("div");
+		subp.className="Cell";
+		subp.appendChild(document.createTextNode("Library"));
+		p.appendChild(subp);
+	};
 
         for(var i=0;i<row.length;i++)
         {
@@ -159,7 +174,8 @@ function addHeader(root,row)
 		var ar=row[i].split("_");
 		for(var j in ar)
 		{
-			subp.innerHTML="date:"+ar[0]+"<br/>"
+			var date=ar[0].substring(0,4)+"-"+ar[0].substring(4,6)+"-"+ar[0].substring(6,8);
+			subp.innerHTML="date:"+date+"<br/>"
                         +"driver:"+ar[1]+"<br/>"
                         +"CL:"+ar[2];
                 	p.appendChild(subp);
@@ -179,6 +195,13 @@ function setRow(root,row,headerArray){
 		if(i==-1)
 		{
 			subp.appendChild(document.createTextNode(row["Casename"]));
+			if( tb == "cuRAND")
+			{
+				p.appendChild(subp);
+				subp=document.createElement("div");
+				subp.className="Cell";
+				subp.innerHTML="cuRAND(GSAMP/s):<br/>MKL(GSAMP/s):";
+			};
 		}else
 		{
 			subp.innerHTML=row[headerArray[i]];
@@ -197,7 +220,7 @@ function drawRowData(casename, rowdata, headerArray)
         datasets : [
                 {
                         fillColor : "rgba(151,187,205,0.5)",
-                        strokeColor : "rgba(151,187,205,1)",
+                        strokeColor : "rgba(220,220,220,1)",
                         pointColor : "rgba(151,187,205,1)",
                         pointStrokeColor : "#fff",
                 },
@@ -215,18 +238,25 @@ var row2=new Array();
 
 for(var i=0;i<rowdata.length;i++)
 {
-	var ar=rowdata[i].split("<br/>");
+	var rowStr=rowdata[i]+"";
+	var ar=rowStr.split("<br/>");
 	row1.push(ar[0]);
 	if(ar.length>1)
 		row2.push(ar[1]);
 	else
 		row2.push(0);
 }
-data["datasets"][0]["title"]="cuRAND";
-data["datasets"][1]["title"]="MKL";
 data["datasets"][0]["data"]=row1;
 data["datasets"][1]["data"]=row2;
-data["labels"]=headerArray;
+var chartHeader=new Array();
+for(var i=0;i<headerArray.length;i++)
+{
+        var ar=headerArray[i].split("_");
+        var date=ar[0].substring(0,4)+"-"+ar[0].substring(4,6)+"-"+ar[0].substring(6,8);
+	chartHeader.push(date);
+};
+data["labels"]=chartHeader;
+
 var ctx = document.getElementById("myChart").getContext("2d");
 var max_=Math.max.apply(null,row2);
 var step=10;

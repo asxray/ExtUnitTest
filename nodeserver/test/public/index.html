@@ -9,6 +9,7 @@
 </div>
 <div id=_input>
 <select onchange="getData()" id="select_id">
+  <option value="Select">Select</option>
   <option value="cuFFT">cuFFT</option>
   <option value="cuRAND">cuRAND</option>
 </select>
@@ -23,7 +24,7 @@
 <script src="javascripts/Chart.js"></script>
 <script src="javascripts/draw.js"></script>
 <script>
-document.getElementById("select_id").selectedIndex = -1;
+document.getElementById("select_id").selectedIndex = 0;
 //window.onload=getData();
 </script>
 
