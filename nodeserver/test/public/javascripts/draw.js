@@ -109,11 +109,6 @@ addHeader(rootelement,header_array);
 for (var i=0;i<record.length;i++)
 {
 	tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
-	//if(typeof record[i]["Duration2"] != "undefined" &&  record[i]["Duration2"]!="0")
-	if(tb == "cuRAND")
-	{
-		tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]+"<br/>"+record[i]["Duration2"];
-	};
 };
 
 current_tab=tab;
@@ -159,13 +154,6 @@ function addHeader(root,row)
         subp.className="Cell";
         subp.appendChild(document.createTextNode("Casename"));
         p.appendChild(subp);
-	if(tb == "cuRAND")
-	{
-		subp = document.createElement("div");
-		subp.className="Cell";
-		subp.appendChild(document.createTextNode("Library"));
-		p.appendChild(subp);
-	};
 
         for(var i=0;i<row.length;i++)
         {
@@ -195,13 +183,6 @@ function setRow(root,row,headerArray){
 		if(i==-1)
 		{
 			subp.appendChild(document.createTextNode(row["Casename"]));
-			if( tb == "cuRAND")
-			{
-				p.appendChild(subp);
-				subp=document.createElement("div");
-				subp.className="Cell";
-				subp.innerHTML="cuRAND(GSAMP/s):<br/>MKL(GSAMP/s):";
-			};
 		}else
 		{
 			subp.innerHTML=row[headerArray[i]];
