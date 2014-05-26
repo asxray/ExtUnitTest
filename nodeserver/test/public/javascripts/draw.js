@@ -6,7 +6,7 @@ var rootelement;
 var header;
 var header_array;
 var tb;
-function Search()
+function SearchRecordByRegex()
 {
 	rootelement.innerHTML="";
 	addHeader(rootelement,header_array);
@@ -29,8 +29,7 @@ function Search()
 	};
 };
 
-
-function Next()
+function NextPage()
 {
 	if(page<Math.ceil(current_tab.length/recordsPerPage))
 	{
@@ -44,7 +43,7 @@ function Next()
 	}
 }
 
-function Back()
+function PreviousPage()
 {
 	if(page>=2)
 	{
@@ -58,92 +57,75 @@ function Back()
 	}
 };
 
+
+function RearrangeRecordAndHeader(record)
+{
+	tab=new Array();
+	header=new Object();
+	header_array=new Array();
+	casename_hash=new Object();
+	for(var i=0;i<record.length;i++)
+	{
+        	header[record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=0;
+        	casename_hash[record[i]["Casename"]]=0;
+	};
+	var tabidx=0;
+	for(var i in casename_hash)
+	{
+       		tab[tabidx]=new Object();
+        	tab[tabidx]["Casename"]=i;
+        	casename_hash[i]=tabidx;
+        	for( var a in header)
+        	{
+                	tab[tabidx][a]=0;
+        	};
+        	tabidx++;
+	};
+	for( var i in header)
+	{
+        	header_array.push(i);
+	}
+	header_array.sort();
+	addHeader(rootelement,header_array);
+	for (var i=0;i<record.length;i++)
+	{
+       		tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
+	};
+};
+
 function getData()
 {
-var xmlhttp;
-xmlhttp=new XMLHttpRequest();
-//document.getElementById("select_id").selectedIndex = -1;
-xmlhttp.onreadystatechange=function(){
-if (xmlhttp.readyState==4 && xmlhttp.status==200)
-{
-document.getElementById("myChart").onclick=function() {
-this.style.display="none";
-};
-rootelement=document.getElementById("myDiv");
-document.getElementById("myDiv").innerHTML="";
-recordsPerPage=1000;
-page=1;
-var record= JSON.parse(xmlhttp.responseText);
-tab=new Array();
-var idx=-1;
-var lastcase="";
-header=new Object();
-header_array=new Array();
-casename_hash=new Object();
-for(var i=0;i<record.length;i++)
-{
-	header[record[i]["Time"]+"_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=0;
-	casename_hash[record[i]["Casename"]]=0;
-};
-var tabidx=0;
-for(var i in casename_hash)
-{
-	tab[tabidx]=new Object();
-	tab[tabidx]["Casename"]=i;
-	casename_hash[i]=tabidx;
-	for( var a in header)
+	var xmlhttp;
+	xmlhttp=new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function(){
+	if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	{
-		tab[tabidx][a]=0;
-	};
-	tabidx++;
-};
-for( var i in header)
-{
-	header_array.push(i);
-}
-header_array.sort();
-addHeader(rootelement,header_array);
-
-
-
-for (var i=0;i<record.length;i++)
-{
-	tab[casename_hash[record[i]["Casename"]]][record[i]["Time"]+ "_"+record[i]["DriverVersion"]+"_"+record[i]["CL"]]=record[i]["Duration1"];
-};
-
-current_tab=tab;
-for(var k=0;k<page*recordsPerPage && k<tab.length ;k++)
-{
-	setRow(rootelement,tab[k],header_array);
-};
-}};
-//xmlhttp.open("GET","/data?database=Library&table=cuFFT",true);
-//xmlhttp.send(null);
-
-tb=document.getElementById("select_id").value;
-if(tb != "Select")
-{
-	xmlhttp.open("GET","/data?database=Library&table="+tb,true);
-	xmlhttp.send(null);
-}else
-{
-	document.getElementById("myDiv").innerHTML="";	
-};
-
-};
-
-function getIdxByCasename(_tab,_casename)
-{
-	for(var i=0;i<_tab.length;i++)
-	{
-		if(_tab[i]["Casename"]==_casename)
+		document.getElementById("myChart").onclick=function() {
+			this.style.display="none";
+		};
+		rootelement=document.getElementById("myDiv");
+		document.getElementById("myDiv").innerHTML="";
+		recordsPerPage=1000;
+		page=1;
+		var record= JSON.parse(xmlhttp.responseText);
+		RearrangeRecordAndHeader(record);
+		current_tab=tab;
+		for(var k=0;k<page*recordsPerPage && k<tab.length ;k++)
 		{
-			return i;
-		}
+			setRow(rootelement,tab[k],header_array);
+		};
+	}
 	};
-	return -1;
+	tb=document.getElementById("select_id").value;
+	if(tb != "Select")
+	{
+		xmlhttp.open("GET","/data?database=Library&table="+tb,true);
+		xmlhttp.send(null);
+	}else
+	{
+		document.getElementById("myDiv").innerHTML="";	
+	};
 };
-
 
 function addHeader(root,row)
 {
@@ -186,7 +168,6 @@ function setRow(root,row,headerArray){
 		}else
 		{
 			subp.innerHTML=row[headerArray[i]];
-			//subp.appendChild(document.createTextNode(row[headerArray[i]]));	
 			sortedRow.push(row[headerArray[i]]);
 		};
 		p.appendChild(subp);
@@ -211,12 +192,10 @@ function drawRowData(casename, rowdata, headerArray)
 			pointColor : "rgba(220,220,220,1)",
 			pointStrokeColor : "#fff",
 		}
-	
-        ]
-};
+        	]
+	};
 var row1=new Array();
 var row2=new Array();
-
 for(var i=0;i<rowdata.length;i++)
 {
 	var rowStr=rowdata[i]+"";
@@ -237,7 +216,6 @@ for(var i=0;i<headerArray.length;i++)
 	chartHeader.push(date);
 };
 data["labels"]=chartHeader;
-
 var ctx = document.getElementById("myChart").getContext("2d");
 var max_=Math.max.apply(null,row2);
 var step=10;

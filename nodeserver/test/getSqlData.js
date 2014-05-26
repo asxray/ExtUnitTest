@@ -17,7 +17,6 @@ if(err){console.log("error when querying:"+err);return};
 callback(err,items);
 });
 })
-
 }
 
 function getSQL(databasename,tablename,callback){
@@ -45,7 +44,7 @@ res.redirect(index.html);
 app.get('/data',function(req,res){
 console.log("request /data");
     if(0 == req.param('database').length || 0 == req.param('table').length){
-	console.log("empty database or table");
+	console.log("invalid database name or table name");
 	return;
     }
     var writeResp = function (err, result){
@@ -61,7 +60,6 @@ console.log("request /data");
     };
 	getMongoDB(req.param('database'),req.param('table'),writeResp);
     //getSQL(req.param('database'),req.param('table'),writeResp);
-
 })
 app.listen(8888);
 console.log("Server has started.");
