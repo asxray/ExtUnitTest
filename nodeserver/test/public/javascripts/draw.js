@@ -217,13 +217,14 @@ for(var i=0;i<headerArray.length;i++)
 };
 data["labels"]=chartHeader;
 var ctx = document.getElementById("myChart").getContext("2d");
-var max_=Math.max.apply(null,row2);
+var max_1=Math.max.apply(null,row1);
+var max_2=Math.max.apply(null,row2);
 var step=10;
 var option=
 {
     scaleOverride: true,
     scaleSteps: step,
-    scaleStepWidth: Math.ceil(max_ / step * 1.5),
+    scaleStepWidth: Math.ceil((max_1>max_2?max_1:max_2) / step * 1.5),
     scaleStartValue: 0
 };
 var myNewChart = new Chart(ctx).Line(data,option);
